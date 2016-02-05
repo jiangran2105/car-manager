@@ -53,12 +53,12 @@
                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <!--<DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                           <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                           <!--<TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="6" />-->
+                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />-->
+                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                        </children>
                                     </GridPane>
                                     <HBox layoutX="88.0" layoutY="226.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="226.0">
