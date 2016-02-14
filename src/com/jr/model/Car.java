@@ -6,6 +6,11 @@ package com.jr.model;
 public class Car {
     private long id;
     private String name;
+    public  Car(){}
+    public Car(long id,String name) {
+        this.id=id;
+        this.name = name;
+    }
 
     public long getId() {
         return id;

@@ -12,6 +12,16 @@ public class RepairHistory {
     private double price;
     private String remark;
 
+    public RepairHistory(long id, String customer, String carNo, String carName, long createTime, double price, String remark) {
+        this.id = id;
+        this.customer = customer;
+        this.carNo = carNo;
+        this.carName = carName;
+        this.createTime = createTime;
+        this.price = price;
+        this.remark = remark;
+    }
+
     public long getId() {
         return id;
     }

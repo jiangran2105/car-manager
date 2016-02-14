@@ -5,9 +5,18 @@ package com.jr.model;
  */
 public class RepairHistoryDetail {
     private long id;
-    private String reparId;
+    private long reparId;
     private String departName;
+    private String provider;
     private double price;
+
+    public RepairHistoryDetail(long id, long reparId, String departName, double price,String provider) {
+        this.id = id;
+        this.reparId = reparId;
+        this.departName = departName;
+        this.price = price;
+        this.provider=provider;
+    }
 
     public long getId() {
         return id;
@@ -17,11 +26,11 @@ public class RepairHistoryDetail {
         this.id = id;
     }
 
-    public String getReparId() {
+    public Long getReparId() {
         return reparId;
     }
 
-    public void setReparId(String reparId) {
+    public void setReparId(Long reparId) {
         this.reparId = reparId;
     }
 
@@ -39,5 +48,13 @@ public class RepairHistoryDetail {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
     }
 }

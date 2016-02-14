@@ -5,8 +5,34 @@ package com.jr.model;
  */
 public class CarDetails {
     private long carId;
-    private String name;
+    /**
+     * 配件信息
+     */
+    private String departName;
+    /**
+     * 价格
+     */
     private double price;
+    /**
+     * 供应商
+     */
+    private String provider;
+
+    public CarDetails(){}
+    public CarDetails(long carId,String provider, String departName, double price) {
+        this.provider = provider;
+        this.departName = departName;
+        this.price = price;
+        this.carId=carId;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
     public long getCarId() {
         return carId;
@@ -17,11 +43,11 @@ public class CarDetails {
     }
 
     public String getName() {
-        return name;
+        return departName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.departName = name;
     }
 
     public double getPrice() {

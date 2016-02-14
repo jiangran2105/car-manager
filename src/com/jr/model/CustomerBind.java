@@ -1,0 +1,184 @@
+package com.jr.model;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+/**
+ * Created by jiangran on 16-2-13.
+ */
+public class CustomerBind {
+    private StringProperty id;
+    /**
+     * 姓名
+     */
+    private StringProperty name;
+    /**
+     * 车牌号
+     */
+    private StringProperty carNo;
+    /**
+     * 手机号
+     */
+    private StringProperty moblie;
+    /**
+     * 保险名称，人保，平安。。。
+     */
+    private StringProperty insurance;
+    /**
+     * 保险开始日期
+     */
+    private StringProperty insuranceStartDate;
+    /**
+     * 保险到期日期
+     */
+    private StringProperty insuranceEndDate;
+    /**
+     * 车型id
+     */
+    private StringProperty  carName;
+    /**
+     * 车架号
+     */
+    private StringProperty driveNo;
+
+    public CustomerBind(String id,String name, String carNo, String moblie, String insurance, String insuranceStartDate, String insuranceEndDate, String carName, String driveNo, String checkDate) {
+        this.id=new SimpleStringProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.carNo = new SimpleStringProperty(carNo);
+        this.moblie = new SimpleStringProperty(moblie);
+        this.insurance = new SimpleStringProperty(insurance);
+        this.insuranceStartDate = new SimpleStringProperty(insuranceStartDate);
+        this.insuranceEndDate = new SimpleStringProperty(insuranceEndDate);
+        this.carName = new SimpleStringProperty(carName);
+        this.driveNo = new SimpleStringProperty(driveNo);
+        this.checkDate = new SimpleStringProperty(checkDate);
+    }
+
+    /**
+     * 验车日期
+
+     */
+
+
+    private StringProperty checkDate;
+
+    public String getId() {
+        return id.get();
+    }
+
+    public StringProperty idProperty() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id.set(id);
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public String getCarNo() {
+        return carNo.get();
+    }
+
+    public StringProperty carNoProperty() {
+        return carNo;
+    }
+
+    public void setCarNo(String carNo) {
+        this.carNo.set(carNo);
+    }
+
+    public String getMoblie() {
+        return moblie.get();
+    }
+
+    public StringProperty moblieProperty() {
+        return moblie;
+    }
+
+    public void setMoblie(String moblie) {
+        this.moblie.set(moblie);
+    }
+
+    public String getInsurance() {
+        return insurance.get();
+    }
+
+    public StringProperty insuranceProperty() {
+        return insurance;
+    }
+
+    public void setInsurance(String insurance) {
+        this.insurance.set(insurance);
+    }
+
+    public String getInsuranceStartDate() {
+        return insuranceStartDate.get();
+    }
+
+    public StringProperty insuranceStartDateProperty() {
+        return insuranceStartDate;
+    }
+
+    public void setInsuranceStartDate(String insuranceStartDate) {
+        this.insuranceStartDate.set(insuranceStartDate);
+    }
+
+    public String getInsuranceEndDate() {
+        return insuranceEndDate.get();
+    }
+
+    public StringProperty insuranceEndDateProperty() {
+        return insuranceEndDate;
+    }
+
+    public void setInsuranceEndDate(String insuranceEndDate) {
+        this.insuranceEndDate.set(insuranceEndDate);
+    }
+
+    public String getCarName() {
+        return carName.get();
+    }
+
+    public StringProperty carNameProperty() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName.set(carName);
+    }
+
+    public String getDriveNo() {
+        return driveNo.get();
+    }
+
+    public StringProperty driveNoProperty() {
+        return driveNo;
+    }
+
+    public void setDriveNo(String driveNo) {
+        this.driveNo.set(driveNo);
+    }
+
+    public String getCheckDate() {
+        return checkDate.get();
+    }
+
+    public StringProperty checkDateProperty() {
+        return checkDate;
+    }
+
+    public void setCheckDate(String checkDate) {
+        this.checkDate.set(checkDate);
+    }
+}

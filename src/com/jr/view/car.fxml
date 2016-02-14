@@ -5,8 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jr.view.Controller">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="145.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -40,6 +39,8 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints />
+                                          <RowConstraints />
                                       </rowConstraints>
                                        <children>
                                           <Label text="姓名" />
@@ -48,22 +49,23 @@
                                           <Label text="保险类型" GridPane.rowIndex="3" />
                                           <Label text="保险开始日期" GridPane.rowIndex="4" />
                                           <Label text="保险到期时间" GridPane.rowIndex="5" />
-                                          <Label text="下次保养日期" GridPane.rowIndex="6" />
-                                          <TextField GridPane.columnIndex="1" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <!--<DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="6" />-->
-                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <Label text="车架号" GridPane.rowIndex="6" />
+                                           <Label text="验车日期" GridPane.rowIndex="7" />
+                                           <Label text="车型" GridPane.rowIndex="8" />
+                                          <TextField fx:id="ctName" GridPane.columnIndex="1" />
+                                          <TextField fx:id="ctCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="ctMobile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="ctInsurance" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <DatePicker fx:id="ctInsuranceStartDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <DatePicker fx:id="ctInsuranceEndDate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                           <TextField fx:id="ctDriveNo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                           <DatePicker fx:id="ctCheckDate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                           <ComboBox fx:id="ctCar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                        </children>
                                     </GridPane>
-                                    <HBox layoutX="88.0" layoutY="226.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="226.0">
+                                    <HBox layoutX="88.0" layoutY="235.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="280.0">
                                        <children>
-                                          <Button layoutX="88.0" layoutY="226.0" mnemonicParsing="false" text="添加" />
+                                          <Button fx:id="ctAdd" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="确定" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -73,24 +75,26 @@
                                     <HBox layoutX="46.0" layoutY="21.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Label layoutX="46.0" layoutY="25.0" text="姓名" />
-                                          <TextField layoutX="89.0" layoutY="21.0" />
+                                          <TextField fx:id="ctqName" layoutX="89.0" layoutY="21.0" />
                                           <Label text="车牌" />
-                                          <TextField />
-                                          <Button mnemonicParsing="false" text="查询" />
+                                          <TextField fx:id="ctqCarNo"/>
+                                          <Button fx:id="ctquery" mnemonicParsing="false" text="查询" />
                                        </children>
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
                                     </HBox>
-                                    <TableView layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                    <TableView fx:id="ctTable" layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="姓名" />
-                                        <TableColumn prefWidth="75.0" text="车牌" />
-                                          <TableColumn prefWidth="75.0" text="手机号" />
-                                          <TableColumn prefWidth="75.0" text="保险名" />
-                                          <TableColumn prefWidth="75.0" text="保险开始时间" />
-                                          <TableColumn prefWidth="75.0" text="保险到期时间" />
-                                          <TableColumn prefWidth="75.0" text="保养预定时间" />
+                                        <TableColumn fx:id="ctcName" prefWidth="75.0" text="姓名" />
+                                        <TableColumn fx:id="ctcCarNo" prefWidth="75.0" text="车牌" />
+                                          <TableColumn fx:id="ctcCarName" prefWidth="75.0" text="车型" />
+                                          <TableColumn fx:id="ctcMoblie" prefWidth="75.0" text="手机号" />
+                                          <TableColumn fx:id="ctcInsurance" prefWidth="75.0" text="保险名" />
+                                          <TableColumn fx:id="ctcInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
+                                          <TableColumn fx:id="ctcInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
+                                          <TableColumn fx:id="ctcDriveNo" prefWidth="75.0" text="车架号" />
+                                          <TableColumn fx:id="ctcCheckDate" prefWidth="75.0" text="验车日期" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -116,20 +120,24 @@
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="77.0" prefWidth="798.0">
                                                    <children>
                                                       <Label layoutX="30.0" layoutY="14.0" text="车型" />
-                                                      <TextField layoutX="85.0" layoutY="10.0" />
+                                                      <TextField fx:id="carName" layoutX="85.0" layoutY="10.0" />
                                                       <Label layoutX="30.0" layoutY="43.0" text="配件名" />
-                                                      <TextField layoutX="85.0" layoutY="39.0" />
-                                                      <Label layoutX="234.0" layoutY="43.0" text="价格" />
-                                                      <TextField layoutX="274.0" layoutY="39.0" />
-                                                      <Button layoutX="424.0" layoutY="39.0" mnemonicParsing="false" text="添加" />
+                                                      <TextField fx:id="carDepart" layoutX="85.0" layoutY="39.0" />
+                                                      <Label layoutX="251.0" layoutY="43.0" text="价格" />
+                                                      <TextField fx:id="carPrice" layoutX="290.0" layoutY="38.0" />
+                                                      <Button fx:id="carAdd" layoutX="463.0" layoutY="39.0" mnemonicParsing="false" text="添加" />
+                                                      <Label layoutX="244.0" layoutY="15.0" text="供应商" />
+                                                      <TextField fx:id="carProvider" layoutX="290.0" layoutY="9.0" />
                                                    </children>
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                    <children>
-                                                      <TableView layoutX="60.0" layoutY="26.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <TableView fx:id="carDetailsTable" layoutX="60.0" layoutY="26.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="75.0" text="配件名" />
-                                                          <TableColumn prefWidth="75.0" text="价格" />
+                                                          <TableColumn fx:id="cdtDepartName" prefWidth="75.0" text="配件名" />
+                                                          <TableColumn fx:id="cdtPrice" prefWidth="75.0" text="价格" />
+                                                            <TableColumn fx:id="cdtProvider" prefWidth="75.0" text="供应商" />
+                                                            <TableColumn fx:id="cdtId" prefWidth="75.0" text="id" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -148,16 +156,17 @@
                                             <items>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
-                                                      <HBox layoutX="24.0" layoutY="22.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <HBox layoutX="24.0" layoutY="22.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <children>
                                                             <Label layoutX="24.0" layoutY="26.0" text="车型" />
-                                                            <TextField layoutX="70.0" layoutY="22.0" />
-                                                            <Button layoutX="235.0" layoutY="22.0" mnemonicParsing="false" text="查询" />
+                                                            <TextField fx:id="carQueryName" layoutX="70.0" layoutY="22.0" />
+                                                            <Button fx:id="carQuery" layoutX="235.0" layoutY="22.0" mnemonicParsing="false" text="查询" />
                                                          </children>
                                                       </HBox>
-                                                      <TableView layoutX="52.0" layoutY="58.0" prefHeight="200.0" prefWidth="223.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+                                                      <TableView fx:id="carTable" layoutX="52.0" layoutY="58.0" prefHeight="200.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="199.0" text="车型" />
+                                                          <TableColumn fx:id="cName" prefWidth="199.0" text="车型" />
+                                                            <TableColumn fx:id="cId" prefWidth="199.0" text="id" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -165,10 +174,11 @@
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
                                                       <Label layoutX="22.0" layoutY="14.0" text="车型对应配件信息列表" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
-                                                      <TableView layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                      <TableView fx:id="ccDetailsTable" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="323.0" text="配件名" />
-                                                          <TableColumn prefWidth="105.0" text="价格" />
+                                                          <TableColumn fx:id="ccdtDepartName" prefWidth="323.0" text="配件名" />
+                                                            <TableColumn fx:id="ccdtProvider" prefWidth="105.0" text="供应商" />
+                                                          <TableColumn fx:id="ccdtPrice" prefWidth="105.0" text="价格" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -214,24 +224,25 @@
                                                             <Label text="车主名" />
                                                             <Label text="车牌号" GridPane.rowIndex="1" />
                                                             <Label text="车型" GridPane.rowIndex="2" />
-                                                            <Label text="总价" GridPane.rowIndex="3" />
-                                                            <TextField GridPane.columnIndex="1" />
-                                                            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <Label visible="false" text="总价" GridPane.rowIndex="3" />
+                                                            <TextField fx:id="rName" GridPane.columnIndex="1" />
+                                                            <TextField fx:id="rCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                            <ComboBox fx:id="rCarName" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                          </children>
                                                       </GridPane>
-                                                      <Button layoutX="14.0" layoutY="112.0" mnemonicParsing="false" text="添加" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
+                                                      <Button fx:id="radd" layoutX="14.0" layoutY="112.0" mnemonicParsing="false" text="添加" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
                                                    </children>
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                    <children>
                                                       <Label layoutX="70.0" layoutY="26.0" text="车型对应配件信息" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                                                      <TableView layoutX="33.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+                                                      <TableView fx:id="rDetailsTable" layoutX="33.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="75.0" text="多选框" />
-                                                          <TableColumn prefWidth="75.0" text="配件名" />
-                                                            <TableColumn prefWidth="75.0" text="价格" />
+                                                          <TableColumn fx:id="rcSelect" prefWidth="75.0" text="多选框" />
+                                                          <TableColumn fx:id="rcDepartName" prefWidth="75.0" text="配件名" />
+                                                            <TableColumn fx:id="rcProvider" prefWidth="75.0" text="供应商" />
+                                                            <TableColumn fx:id="rcPrice" prefWidth="75.0" text="价格" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -256,16 +267,16 @@
                                                             <TextField layoutX="86.0" layoutY="19.0" />
                                                             <Label layoutX="242.0" layoutY="23.0" text="车牌号" />
                                                             <TextField layoutX="282.0" layoutY="19.0" />
-                                                            <Button layoutX="445.0" layoutY="19.0" mnemonicParsing="false" text="查询" />
+                                                            <Button fx:id="rQuery" layoutX="445.0" layoutY="19.0" mnemonicParsing="false" text="查询" />
                                                          </children>
                                                       </HBox>
-                                                      <TableView layoutX="40.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+                                                      <TableView fx:id="rRepairTable" layoutX="40.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="75.0" text="车主名" />
-                                                          <TableColumn prefWidth="75.0" text="车牌号" />
-                                                            <TableColumn prefWidth="75.0" text="车型" />
-                                                            <TableColumn prefWidth="75.0" text="添加日期" />
-                                                            <TableColumn prefWidth="75.0" text="总价" />
+                                                          <TableColumn fx:id="rcCustomer" prefWidth="75.0" text="车主名" />
+                                                          <TableColumn fx:id="rcCarNo" prefWidth="75.0" text="车牌号" />
+                                                            <TableColumn fx:id="rcCarName" prefWidth="75.0" text="车型" />
+                                                            <TableColumn fx:id="rcCreatetime" prefWidth="75.0" text="添加日期" />
+                                                            <TableColumn fx:id="rcTotalPrice" prefWidth="75.0" text="总价" />
                                                             <TableColumn prefWidth="75.0" text="备注" />
                                                         </columns>
                                                       </TableView>
@@ -274,10 +285,11 @@
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="798.0">
                                                    <children>
                                                       <Label layoutX="24.0" layoutY="14.0" text="更换配件明细" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0" />
-                                                      <TableView layoutX="41.0" layoutY="22.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                                                      <TableView fx:id="rRepairDetailsTable" layoutX="41.0" layoutY="22.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="75.0" text="配件名" />
-                                                          <TableColumn prefWidth="75.0" text="价格" />
+                                                          <TableColumn fx:id="rdcDepartName" prefWidth="75.0" text="配件名" />
+                                                            <TableColumn fx:id="rdcProvider" prefWidth="75.0" text="供应商" />
+                                                          <TableColumn fx:id="rdcPrice" prefWidth="75.0" text="价格" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
