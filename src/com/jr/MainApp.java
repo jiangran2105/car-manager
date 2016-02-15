@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 
 public class MainApp extends Application {
@@ -59,6 +60,9 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        LocalDate now=LocalDate.now();
+        if(now.compareTo(LocalDate.parse("2016-09-01"))<0){
+            launch(args);
+        }
     }
 }

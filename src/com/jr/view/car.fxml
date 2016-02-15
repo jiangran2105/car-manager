@@ -18,94 +18,7 @@
       </MenuBar>
       <TabPane fx:id="tabPane" layoutX="68.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <tabs>
-          <Tab id="customer" text="车主信息">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <SplitPane dividerPositions="0.29797979797979796" layoutX="22.0" layoutY="49.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <GridPane layoutX="-6.0" layoutY="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints />
-                                          <RowConstraints />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="姓名" />
-                                          <Label text="车牌" GridPane.rowIndex="1" />
-                                          <Label text="手机号" GridPane.rowIndex="2" />
-                                          <Label text="保险类型" GridPane.rowIndex="3" />
-                                          <Label text="保险开始日期" GridPane.rowIndex="4" />
-                                          <Label text="保险到期时间" GridPane.rowIndex="5" />
-                                          <Label text="车架号" GridPane.rowIndex="6" />
-                                           <Label text="验车日期" GridPane.rowIndex="7" />
-                                           <Label text="车型" GridPane.rowIndex="8" />
-                                          <TextField fx:id="ctName" GridPane.columnIndex="1" />
-                                          <TextField fx:id="ctCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField fx:id="ctMobile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField fx:id="ctInsurance" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <DatePicker fx:id="ctInsuranceStartDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <DatePicker fx:id="ctInsuranceEndDate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                           <TextField fx:id="ctDriveNo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                           <DatePicker fx:id="ctCheckDate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                           <ComboBox fx:id="ctCar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                       </children>
-                                    </GridPane>
-                                    <HBox layoutX="88.0" layoutY="235.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="280.0">
-                                       <children>
-                                          <Button fx:id="ctAdd" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="确定" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <HBox layoutX="46.0" layoutY="21.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <Label layoutX="46.0" layoutY="25.0" text="姓名" />
-                                          <TextField fx:id="ctqName" layoutX="89.0" layoutY="21.0" />
-                                          <Label text="车牌" />
-                                          <TextField fx:id="ctqCarNo"/>
-                                          <Button fx:id="ctquery" mnemonicParsing="false" text="查询" />
-                                       </children>
-                                       <padding>
-                                          <Insets top="2.0" />
-                                       </padding>
-                                    </HBox>
-                                    <TableView fx:id="ctTable" layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                                      <columns>
-                                        <TableColumn fx:id="ctcName" prefWidth="75.0" text="姓名" />
-                                        <TableColumn fx:id="ctcCarNo" prefWidth="75.0" text="车牌" />
-                                          <TableColumn fx:id="ctcCarName" prefWidth="75.0" text="车型" />
-                                          <TableColumn fx:id="ctcMoblie" prefWidth="75.0" text="手机号" />
-                                          <TableColumn fx:id="ctcInsurance" prefWidth="75.0" text="保险名" />
-                                          <TableColumn fx:id="ctcInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
-                                          <TableColumn fx:id="ctcInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
-                                          <TableColumn fx:id="ctcDriveNo" prefWidth="75.0" text="车架号" />
-                                          <TableColumn fx:id="ctcCheckDate" prefWidth="75.0" text="验车日期" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </AnchorPane>
-                          </items>
-                        </SplitPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab id="car" text="车辆信息">
+            <Tab id="car" text="车辆信息">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -195,6 +108,93 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab id="customer" text="车主信息">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <SplitPane dividerPositions="0.29797979797979796" layoutX="22.0" layoutY="49.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                        <children>
+                                            <GridPane layoutX="-6.0" layoutY="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <columnConstraints>
+                                                    <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                </columnConstraints>
+                                                <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints />
+                                                    <RowConstraints />
+                                                </rowConstraints>
+                                                <children>
+                                                    <Label text="姓名" />
+                                                    <Label text="车牌" GridPane.rowIndex="1" />
+                                                    <Label text="手机号" GridPane.rowIndex="2" />
+                                                    <Label text="保险类型" GridPane.rowIndex="3" />
+                                                    <Label text="保险开始日期" GridPane.rowIndex="4" />
+                                                    <Label text="保险到期时间" GridPane.rowIndex="5" />
+                                                    <Label text="车架号" GridPane.rowIndex="6" />
+                                                    <Label text="验车日期" GridPane.rowIndex="7" />
+                                                    <Label text="车型" GridPane.rowIndex="8" />
+                                                    <TextField fx:id="ctName" GridPane.columnIndex="1" />
+                                                    <TextField fx:id="ctCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                    <TextField fx:id="ctMobile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                    <TextField fx:id="ctInsurance" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                    <DatePicker fx:id="ctInsuranceStartDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                    <DatePicker fx:id="ctInsuranceEndDate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                    <TextField fx:id="ctDriveNo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                    <DatePicker fx:id="ctCheckDate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                    <ComboBox fx:id="ctCar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                </children>
+                                            </GridPane>
+                                            <HBox layoutX="88.0" layoutY="235.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="280.0">
+                                                <children>
+                                                    <Button fx:id="ctAdd" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="确定" />
+                                                </children>
+                                            </HBox>
+                                        </children>
+                                    </AnchorPane>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                        <children>
+                                            <HBox layoutX="46.0" layoutY="21.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <children>
+                                                    <Label layoutX="46.0" layoutY="25.0" text="姓名" />
+                                                    <TextField fx:id="ctqName" layoutX="89.0" layoutY="21.0" />
+                                                    <Label text="车牌" />
+                                                    <TextField fx:id="ctqCarNo"/>
+                                                    <Button fx:id="ctquery" mnemonicParsing="false" text="查询" />
+                                                </children>
+                                                <padding>
+                                                    <Insets top="2.0" />
+                                                </padding>
+                                            </HBox>
+                                            <TableView fx:id="ctTable" layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                <columns>
+                                                    <TableColumn fx:id="ctcName" prefWidth="75.0" text="姓名" />
+                                                    <TableColumn fx:id="ctcCarNo" prefWidth="75.0" text="车牌" />
+                                                    <TableColumn fx:id="ctcCarName" prefWidth="75.0" text="车型" />
+                                                    <TableColumn fx:id="ctcMoblie" prefWidth="75.0" text="手机号" />
+                                                    <TableColumn fx:id="ctcInsurance" prefWidth="75.0" text="保险名" />
+                                                    <TableColumn fx:id="ctcInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
+                                                    <TableColumn fx:id="ctcInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
+                                                    <TableColumn fx:id="ctcDriveNo" prefWidth="75.0" text="车架号" />
+                                                    <TableColumn fx:id="ctcCheckDate" prefWidth="75.0" text="验车日期" />
+                                                </columns>
+                                            </TableView>
+                                        </children>
+                                    </AnchorPane>
+                                </items>
+                            </SplitPane>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
             <Tab id="repair" text="维修记录">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

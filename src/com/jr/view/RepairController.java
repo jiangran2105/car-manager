@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,7 +62,7 @@ public class RepairController {
                     new SimpleStringProperty(rh.getCustomer()),
                     new SimpleStringProperty(rh.getCarNo()),
                     new SimpleStringProperty(rh.getCarName()),
-                    new SimpleStringProperty(String.valueOf(rh.getCreateTime())),
+                    new SimpleStringProperty(String.valueOf(DateFormat.getDateInstance().format(new Date(rh.getCreateTime())))),
                     new SimpleStringProperty(String.valueOf(rh.getPrice())),
                     new SimpleStringProperty(rh.getRemark()));
             repairObservableList.add(rhb);

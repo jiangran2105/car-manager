@@ -45,7 +45,7 @@ public class RepairService {
         }
     }
     public List<RepairHistory> findRepairHis(){
-        String sql="select * from reparation";
+        String sql="select * from reparation order by createDate desc";
         BaseDao baseDao=new BaseDao();
         List<RepairHistory> repairHistories = baseDao.executeQuery(sql, new MapSqlParameterSource(), new RowMapper<RepairHistory>() {
             @Override
