@@ -19,7 +19,7 @@ public class CarMsgService  {
     public Long insertCar(Car car){
         String sql1="insert into car(id,carName) values(null,:carName);";
         String sql2="select max(id) from car;";
-        SqlParameterSource namedParameters = new MapSqlParameterSource("carName", car.getName());
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource("carName", car.getName());
         BaseDao baseDao=new BaseDao();
         baseDao.executeUpdate(sql1,namedParameters);
         Long carId=baseDao.executeQueryOne(sql2,new MapSqlParameterSource(),Long.TYPE);

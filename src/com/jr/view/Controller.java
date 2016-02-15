@@ -17,6 +17,9 @@ import java.util.List;
 
 public class Controller {
     @FXML
+    private TabPane tabPane;
+
+    @FXML
     private TextField ctName;
     @FXML
     private TextField ctCarNo;
@@ -107,7 +110,7 @@ public class Controller {
     @FXML
     private TableColumn<CarDetailsBind, String> ccdtProvider;
 
-    /*************车辆信息**************/
+    /*************维修信息**************/
     @FXML
     private TextField rName;
     @FXML
@@ -144,7 +147,6 @@ public class Controller {
     @FXML
     private TableColumn<RepairHistoryBind, String> rcTotalPrice;
 
-
     @FXML
     private TableView<RepairHistoryDetailBind> rRepairDetailsTable;
     @FXML
@@ -154,9 +156,25 @@ public class Controller {
     @FXML
     private TableColumn<RepairHistoryDetailBind, String> rdcProvider;
 
-
     @FXML
     private  void initialize() {
+        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                String tabId=newValue.getId();
+                switch (tabId){
+                    case "customer":
+                        clearCustomerField();
+                        break;
+                    case "car":
+                        clearCarField();
+                        break;
+                    case "repair":
+                        clearRepairField();
+                        break;
+                }
+            }
+        });
         initializeCarMoudle();
         initializeCustomerMoudle();
         initializeRepairMoudle();
@@ -184,7 +202,6 @@ public class Controller {
                         ctInsurance.getText(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
                         ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getValue().toString(),ctDriveNo.getText(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
                ctTable.setItems(customerController.getCustomerObservableList());
-//                Date d=new Date(1454371200000L);
             }
         });
         ctquery.setOnAction(new EventHandler<ActionEvent>() {
@@ -206,6 +223,7 @@ public class Controller {
                     ctInsuranceStartDate.setValue(LocalDate.ofEpochDay(Long.valueOf(newValue.getInsuranceStartDate())/24/3600/1000));
                     ctInsuranceEndDate.setValue(LocalDate.ofEpochDay(Long.valueOf(newValue.getInsuranceEndDate())/24/3600/1000));
                     ctCheckDate.setValue(LocalDate.ofEpochDay(Long.valueOf(newValue.getCheckDate())/24/3600/1000));
+                    ctDriveNo.setText(newValue.getDriveNo());
                     customerController.isEdit=Long.valueOf(newValue.getId());
                 }
             }
@@ -253,6 +271,9 @@ public class Controller {
 
     }
 
+    /**
+     * 初始化维修记录模块
+     */
     private void initializeRepairMoudle(){
         RepairController repairController=new RepairController();
         rcDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
@@ -309,7 +330,7 @@ public class Controller {
                 Alert alert=new Alert(Alert.AlertType.INFORMATION,"添加成功");
                 alert.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.OK) {
-                        System.out.print("ok");
+                        clearRepairField();
                     }
                 });
 
@@ -332,6 +353,38 @@ public class Controller {
                 }
             }
         });
+    }
+
+    private void clearCustomerField(){
+        ctName.clear();
+        ctCarNo.clear();
+        ctMobile.clear();
+        ctInsurance.clear();
+        ctInsuranceStartDate.setValue(null);
+        ctInsuranceEndDate.setValue(null);
+        ctDriveNo.clear();
+        ctCheckDate.setValue(null);
+        ctCar.setValue("请选择车型");
+        ctqCarNo.clear();
+        ctqName.clear();
+        ctTable.getItems().clear();
+    }
+    private void clearCarField(){
+        carName.clear();
+        carDepart.clear();
+        carPrice.clear();
+        carProvider.clear();
+        carQueryName.clear();
+        carDetailsTable.getItems().clear();
+        carTable.getItems().clear();
+        ccDetailsTable.getItems().clear();
+
+    }
+    private void clearRepairField(){
+        rName.clear();
+        rCarNo.clear();
+        rCarName.setValue("");
+        rDetailsTable.getItems().clear();
     }
 }
 

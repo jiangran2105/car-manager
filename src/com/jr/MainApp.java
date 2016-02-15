@@ -1,21 +1,25 @@
 package com.jr;
 
+import com.jr.util.CommonUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.sql.*;
 
 
 public class MainApp extends Application {
 
+    Log log  = LogFactory.getLog(MainApp.class);
     @Override
     public void start(Stage primaryStage) throws Exception {
         initalDataBase();
         Parent root = FXMLLoader.load(getClass().getResource("view/car.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("客户与车辆管理");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
@@ -38,27 +42,8 @@ public class MainApp extends Application {
                     "price REAL,remark TEXT);");
             stat.executeUpdate("CREATE TABLE IF NOT EXISTS reparation_details(id INTEGER PRIMARY KEY, reparId INTEGER,departName TEXT,price REAL,provider TEXT);");
 
-
-
-            /*stat.executeUpdate( "insert into tbl1 values('ZhangSan',8000);" ); //插入数据
-
-            stat.executeUpdate( "insert into tbl1 values('LiSi',7800);" );
-            stat.executeUpdate( "insert into tbl1 values('WangWu',5800);" );
-            stat.executeUpdate( "insert into tbl1 values('ZhaoLiu',9100);" );
-
-            ResultSet rs = stat.executeQuery("select * from tbl1;"); //查询数据
-
-            while (rs.next()) { //将查询到的数据打印出来
-
-                System.out.print("name = " + rs.getString("name") + " "); //列属性一
-
-                System.out.println("salary = " + rs.getString("salary")); //列属性二
-
-            }
-            rs.close();*/
-
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(new CommonUtil().getTrace(e));
         } finally {
             try {
                 if (stat != null) {
@@ -68,7 +53,7 @@ public class MainApp extends Application {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(new CommonUtil().getTrace(e));
             }
         }
     }

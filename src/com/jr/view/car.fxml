@@ -16,9 +16,9 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane layoutX="68.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <TabPane fx:id="tabPane" layoutX="68.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <tabs>
-          <Tab text="车主信息">
+          <Tab id="customer" text="车主信息">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -105,7 +105,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="车辆信息">
+          <Tab id="car" text="车辆信息">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -195,7 +195,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="维修记录">
+            <Tab id="repair" text="维修记录">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
