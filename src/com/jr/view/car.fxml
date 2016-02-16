@@ -18,6 +18,48 @@
       </MenuBar>
       <TabPane fx:id="tabPane" layoutX="68.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <tabs>
+            <Tab id="needInsurance" text="保险即将到期用户">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TableView fx:id="niTable" layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                <columns>
+                                    <TableColumn fx:id="cniName" prefWidth="75.0" text="姓名" />
+                                    <TableColumn fx:id="cniCarNo" prefWidth="75.0" text="车牌" />
+                                    <TableColumn fx:id="cniCarName" prefWidth="75.0" text="车型" />
+                                    <TableColumn fx:id="cniMoblie" prefWidth="75.0" text="手机号" />
+                                    <TableColumn fx:id="cniInsurance" prefWidth="75.0" text="保险名" />
+                                    <TableColumn fx:id="cniInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
+                                    <TableColumn fx:id="cniInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
+                                    <TableColumn fx:id="cniDriveNo" prefWidth="75.0" text="车架号" />
+                                    <TableColumn fx:id="cniCheckDate" prefWidth="75.0" text="验车日期" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+            <Tab id="needCheck" text="车检即将到期用户">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TableView fx:id="ncTable" layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                <columns>
+                                    <TableColumn fx:id="cncName" prefWidth="75.0" text="姓名" />
+                                    <TableColumn fx:id="cncCarNo" prefWidth="75.0" text="车牌" />
+                                    <TableColumn fx:id="cncCarName" prefWidth="75.0" text="车型" />
+                                    <TableColumn fx:id="cncMoblie" prefWidth="75.0" text="手机号" />
+                                    <TableColumn fx:id="cncInsurance" prefWidth="75.0" text="保险名" />
+                                    <TableColumn fx:id="cncInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
+                                    <TableColumn fx:id="cncInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
+                                    <TableColumn fx:id="cncDriveNo" prefWidth="75.0" text="车架号" />
+                                    <TableColumn fx:id="cncCheckDate" prefWidth="75.0" text="验车日期" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
             <Tab id="car" text="车辆信息">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

@@ -156,6 +156,49 @@ public class Controller {
     @FXML
     private TableColumn<RepairHistoryDetailBind, String> rdcProvider;
 
+    /*************维修信息**************/
+    @FXML
+    private TableView<CustomerBind> niTable;
+    @FXML
+    private TableColumn<CustomerBind, String> cniName;
+    @FXML
+    private TableColumn<CustomerBind, String> cniCarNo;
+    @FXML
+    private TableColumn<CustomerBind, String> cniMoblie;
+    @FXML
+    private TableColumn<CustomerBind, String> cniInsurance;
+    @FXML
+    private TableColumn<CustomerBind, String> cniInsuranceStartDate;
+    @FXML
+    private TableColumn<CustomerBind, String> cniInsuranceEndDate;
+    @FXML
+    private TableColumn<CustomerBind, String> cniDriveNo;
+    @FXML
+    private TableColumn<CustomerBind, String> cniCarName;
+    @FXML
+    private TableColumn<CustomerBind, String> cniCheckDate;
+
+    @FXML
+    private TableView<CustomerBind> ncTable;
+    @FXML
+    private TableColumn<CustomerBind, String> cncName;
+    @FXML
+    private TableColumn<CustomerBind, String> cncCarNo;
+    @FXML
+    private TableColumn<CustomerBind, String> cncMoblie;
+    @FXML
+    private TableColumn<CustomerBind, String> cncInsurance;
+    @FXML
+    private TableColumn<CustomerBind, String> cncInsuranceStartDate;
+    @FXML
+    private TableColumn<CustomerBind, String> cncInsuranceEndDate;
+    @FXML
+    private TableColumn<CustomerBind, String> cncDriveNo;
+    @FXML
+    private TableColumn<CustomerBind, String> cncCarName;
+    @FXML
+    private TableColumn<CustomerBind, String> cncCheckDate;
+
     @FXML
     private  void initialize() {
         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
@@ -175,16 +218,17 @@ public class Controller {
                 }
             }
         });
-        initializeCarMoudle();
-        initializeCustomerMoudle();
-        initializeRepairMoudle();
+        initializeCarModule();
+        initializeCustomerModule();
+        initializeRepairModule();
+        initializeNeedInsuranceModule();
 
     }
 
     /**
      * 初始化客户信息模块
      */
-    private void initializeCustomerMoudle(){
+    private void initializeCustomerModule(){
         CustomerController customerController=new CustomerController();
         customerController.initializeCarComobox(ctCar);
         ctcName.setCellValueFactory(c->c.getValue().nameProperty());
@@ -232,7 +276,7 @@ public class Controller {
     /**
      * 初始化车辆信息模块
      */
-    private void initializeCarMoudle(){
+    private void initializeCarModule(){
         cdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         cdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         cdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
@@ -274,7 +318,7 @@ public class Controller {
     /**
      * 初始化维修记录模块
      */
-    private void initializeRepairMoudle(){
+    private void initializeRepairModule(){
         RepairController repairController=new RepairController();
         rcDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         rcProvider.setCellValueFactory(c->c.getValue().providerProperty());
@@ -353,6 +397,29 @@ public class Controller {
                 }
             }
         });
+    }
+
+    private void initializeNeedInsuranceModule(){
+        cniName.setCellValueFactory(c->c.getValue().nameProperty());
+        cniCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
+        cniMoblie.setCellValueFactory(c->c.getValue().moblieProperty());
+        cniInsurance.setCellValueFactory(c->c.getValue().insuranceProperty());
+        cniInsuranceStartDate.setCellValueFactory(c->c.getValue().insuranceStartDateProperty());
+        cniInsuranceEndDate.setCellValueFactory(c->c.getValue().insuranceEndDateProperty());
+        cniCarName.setCellValueFactory(c->c.getValue().carNameProperty());
+        cniDriveNo.setCellValueFactory(c->c.getValue().driveNoProperty());
+        cniCheckDate.setCellValueFactory(c->c.getValue().checkDateProperty());
+    }
+    private void initializeNeedCheckModule(){
+        cncName.setCellValueFactory(c->c.getValue().nameProperty());
+        cncCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
+        cncMoblie.setCellValueFactory(c->c.getValue().moblieProperty());
+        cncInsurance.setCellValueFactory(c->c.getValue().insuranceProperty());
+        cncInsuranceStartDate.setCellValueFactory(c->c.getValue().insuranceStartDateProperty());
+        cncInsuranceEndDate.setCellValueFactory(c->c.getValue().insuranceEndDateProperty());
+        cncCarName.setCellValueFactory(c->c.getValue().carNameProperty());
+        cncDriveNo.setCellValueFactory(c->c.getValue().driveNoProperty());
+        cncCheckDate.setCellValueFactory(c->c.getValue().checkDateProperty());
     }
 
     private void clearCustomerField(){

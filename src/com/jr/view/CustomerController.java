@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,11 +57,11 @@ public class CustomerController {
                 String.valueOf(c.getCarNo()),
                 String.valueOf(c.getMoblie()),
                 String.valueOf(c.getInsurance()),
-                String.valueOf(c.getInsuranceStartDate()),
-                String.valueOf(c.getInsuranceEndDate()),
+                String.valueOf(DateFormat.getDateInstance().format(new Date(c.getInsuranceStartDate()))),
+                String.valueOf(DateFormat.getDateInstance().format(new Date(c.getInsuranceEndDate()))),
                 String.valueOf(c.getCarName()),
                 String.valueOf(c.getDriveNo()),
-                String.valueOf(c.getCheckDate()))).collect(Collectors.toList()));
+                String.valueOf(DateFormat.getDateInstance().format(new Date(c.getCheckDate()))))).collect(Collectors.toList()));
     }
 
 }
