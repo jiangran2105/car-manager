@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,16 +53,17 @@ public class CustomerController {
         CustomerService cs=new CustomerService();
         List<Customer> customers=cs.queryCustomer(carNo,name);
         customerObservableList.clear();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         customerObservableList.addAll(customers.stream().map(c -> new CustomerBind(String.valueOf(c.getId()),
                 String.valueOf(c.getName()),
                 String.valueOf(c.getCarNo()),
                 String.valueOf(c.getMoblie()),
                 String.valueOf(c.getInsurance()),
-                String.valueOf(DateFormat.getDateInstance().format(new Date(c.getInsuranceStartDate()))),
-                String.valueOf(DateFormat.getDateInstance().format(new Date(c.getInsuranceEndDate()))),
+                String.valueOf(format.format(new Date(c.getInsuranceStartDate()))),
+                String.valueOf(format.format(new Date(c.getInsuranceEndDate()))),
                 String.valueOf(c.getCarName()),
                 String.valueOf(c.getDriveNo()),
-                String.valueOf(DateFormat.getDateInstance().format(new Date(c.getCheckDate()))))).collect(Collectors.toList()));
+                String.valueOf(format.format(new Date(c.getCheckDate()))))).collect(Collectors.toList()));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.jr.view;
 import com.jr.model.*;
+import com.jr.services.NotifyType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -201,9 +202,20 @@ public class Controller {
 
     @FXML
     private  void initialize() {
+        initializeCarModule();
+        initializeCustomerModule();
+        initializeRepairModule();
+        initializeNeedInsuranceModule();
+        initializeNeedCheckModule();
+
+        NotifyController notifyController=new NotifyController();
+        notifyController.queryNotifyCustomer(NotifyType.insurance);
+        niTable.setItems(notifyController.getCustomerObservableList());
+        
         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                NotifyController notifyController=new NotifyController();
                 String tabId=newValue.getId();
                 switch (tabId){
                     case "customer":
@@ -215,13 +227,18 @@ public class Controller {
                     case "repair":
                         clearRepairField();
                         break;
+                    case "needInsurance":
+                        notifyController.queryNotifyCustomer(NotifyType.insurance);
+                        niTable.setItems(notifyController.getCustomerObservableList());
+                        break;
+                    case "needCheck":
+                        notifyController.queryNotifyCustomer(NotifyType.checkDate);
+                        ncTable.setItems(notifyController.getCustomerObservableList());
+                        break;
                 }
             }
         });
-        initializeCarModule();
-        initializeCustomerModule();
-        initializeRepairModule();
-        initializeNeedInsuranceModule();
+
 
     }
 
@@ -264,9 +281,9 @@ public class Controller {
                     ctMobile.setText(newValue.getMoblie());
                     ctInsurance.setText(newValue.getInsurance());
                     ctCar.setValue(newValue.getCarName());
-                    ctInsuranceStartDate.setValue(LocalDate.ofEpochDay(Long.valueOf(newValue.getInsuranceStartDate())/24/3600/1000));
-                    ctInsuranceEndDate.setValue(LocalDate.ofEpochDay(Long.valueOf(newValue.getInsuranceEndDate())/24/3600/1000));
-                    ctCheckDate.setValue(LocalDate.ofEpochDay(Long.valueOf(newValue.getCheckDate())/24/3600/1000));
+                    ctInsuranceStartDate.setValue(LocalDate.parse(newValue.getInsuranceStartDate()));
+                    ctInsuranceEndDate.setValue(LocalDate.parse(newValue.getInsuranceEndDate()));
+                    ctCheckDate.setValue(LocalDate.parse(newValue.getCheckDate()));
                     ctDriveNo.setText(newValue.getDriveNo());
                     customerController.isEdit=Long.valueOf(newValue.getId());
                 }
