@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import java.util.List;
 
 
 public class Controller {
+    Log log= LogFactory.getLog(Controller.class);
+
     @FXML
     private TabPane tabPane;
 
@@ -212,32 +216,28 @@ public class Controller {
         notifyController.queryNotifyCustomer(NotifyType.insurance);
         niTable.setItems(notifyController.getCustomerObservableList());
         
-        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                NotifyController notifyController=new NotifyController();
-                String tabId=newValue.getId();
-                switch (tabId){
-                    case "customer":
-                        clearCustomerField();
-                        break;
-                    case "car":
-                        clearCarField();
-                        break;
-                    case "repair":
-                        clearRepairField();
-                        break;
-                    case "needInsurance":
-                        notifyController.queryNotifyCustomer(NotifyType.insurance);
-                        niTable.setItems(notifyController.getCustomerObservableList());
-                        break;
-                    case "needCheck":
-                        notifyController.queryNotifyCustomer(NotifyType.checkDate);
-                        ncTable.setItems(notifyController.getCustomerObservableList());
-                        break;
-                }
+        tabPane.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            String tabId=newValue.getId();
+            switch (tabId){
+                case "customer":
+                    clearCustomerField();
+                    break;
+                case "car":
+                    clearCarField();
+                    break;
+                case "repair":
+                    clearRepairField();
+                    break;
+                case "needInsurance":
+                    notifyController.queryNotifyCustomer(NotifyType.insurance);
+                    niTable.setItems(notifyController.getCustomerObservableList());
+                    break;
+                case "needCheck":
+                    notifyController.queryNotifyCustomer(NotifyType.checkDate);
+                    ncTable.setItems(notifyController.getCustomerObservableList());
+                    break;
             }
-        });
+        }));
 
 
     }
@@ -257,38 +257,32 @@ public class Controller {
         ctcCarName.setCellValueFactory(c->c.getValue().carNameProperty());
         ctcDriveNo.setCellValueFactory(c->c.getValue().driveNoProperty());
         ctcCheckDate.setCellValueFactory(c->c.getValue().checkDateProperty());
-        ctAdd.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                customerController.addCustomer(ctName.getText(),ctCarNo.getText(),ctMobile.getText(),
-                        ctInsurance.getText(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
-                        ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getValue().toString(),ctDriveNo.getText(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
-               ctTable.setItems(customerController.getCustomerObservableList());
-            }
+        ctAdd.setOnAction(event1 -> {
+            customerController.addCustomer(ctName.getText(),ctCarNo.getText(),ctMobile.getText(),
+                    ctInsurance.getText(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
+                    ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getValue().toString(),ctDriveNo.getText(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
+            ctTable.setItems(customerController.getCustomerObservableList());
         });
-        ctquery.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                customerController.queryCustomer(ctqName.getText(),ctqCarNo.getText());
-                ctTable.setItems(customerController.getCustomerObservableList());
-            }
+
+        ctquery.setOnAction(event -> {
+            customerController.queryCustomer(ctqName.getText(),ctqCarNo.getText());
+            ctTable.setItems(customerController.getCustomerObservableList());
         });
-        ctTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CustomerBind>() {
-            @Override
-            public void changed(ObservableValue<? extends CustomerBind> observable, CustomerBind oldValue, CustomerBind newValue) {
-                if(newValue!=null){
-                    ctName.setText(newValue.getName());
-                    ctCarNo.setText(newValue.getCarNo());
-                    ctMobile.setText(newValue.getMoblie());
-                    ctInsurance.setText(newValue.getInsurance());
-                    ctCar.setValue(newValue.getCarName());
-                    ctInsuranceStartDate.setValue(LocalDate.parse(newValue.getInsuranceStartDate()));
-                    ctInsuranceEndDate.setValue(LocalDate.parse(newValue.getInsuranceEndDate()));
-                    ctCheckDate.setValue(LocalDate.parse(newValue.getCheckDate()));
-                    ctDriveNo.setText(newValue.getDriveNo());
-                    customerController.isEdit=Long.valueOf(newValue.getId());
-                }
+
+        ctTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue!=null){
+                ctName.setText(newValue.getName());
+                ctCarNo.setText(newValue.getCarNo());
+                ctMobile.setText(newValue.getMoblie());
+                ctInsurance.setText(newValue.getInsurance());
+                ctCar.setValue(newValue.getCarName());
+                ctInsuranceStartDate.setValue(LocalDate.parse(newValue.getInsuranceStartDate()));
+                ctInsuranceEndDate.setValue(LocalDate.parse(newValue.getInsuranceEndDate()));
+                ctCheckDate.setValue(LocalDate.parse(newValue.getCheckDate()));
+                ctDriveNo.setText(newValue.getDriveNo());
+                customerController.isEdit=Long.valueOf(newValue.getId());
             }
-        });
+        }));
     }
     /**
      * 初始化车辆信息模块
@@ -298,37 +292,28 @@ public class Controller {
         cdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         cdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
         cdtId.setCellValueFactory(c->c.getValue().idProperty());
-        carAdd.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                CarController carController=new CarController();
-                carController.addCarMsg(carName.getText(),carDepart.getText(),Double.valueOf(carPrice.getText()),carProvider.getText());
-                carDetailsTable.setItems(carController.getCarDetailsObservableList());
-            }
+        carAdd.setOnAction(event -> {
+            CarController carController=new CarController();
+            carController.addCarMsg(carName.getText(),carDepart.getText(),Double.valueOf(carPrice.getText()),carProvider.getText());
+            carDetailsTable.setItems(carController.getCarDetailsObservableList());
         });
         cId.setCellValueFactory(c->c.getValue().idProperty());
         cName.setCellValueFactory(c->c.getValue().carNameProperty());
-        carQuery.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CarController carController=new CarController();
-                carController.queryCars(carQueryName.getText());
-                carTable.setItems(carController.getCarObservableList());
-            }
+        carQuery.setOnAction(event -> {
+            CarController carController=new CarController();
+            carController.queryCars(carQueryName.getText());
+            carTable.setItems(carController.getCarObservableList());
         });
         ccdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         ccdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         ccdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
-        carTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CarBind>() {
-            @Override
-            public void changed(ObservableValue<? extends CarBind> observable, CarBind oldValue, CarBind newValue) {
-                if(newValue!=null){
-                    CarController carController=new CarController();
-                    carController.fillCarDetailsObservableList(Long.valueOf(newValue.getId()));
-                    ccDetailsTable.setItems(carController.getCarDetailsObservableList());
-                }
-
+        carTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue!=null){
+                CarController carController=new CarController();
+                carController.fillCarDetailsObservableList(Long.valueOf(newValue.getId()));
+                ccDetailsTable.setItems(carController.getCarDetailsObservableList());
             }
-        });
+        }));
 
     }
 
@@ -352,68 +337,51 @@ public class Controller {
         rdcProvider.setCellValueFactory(c->c.getValue().providerProperty());
         rdcPrice.setCellValueFactory(c->c.getValue().priceProperty());
 
-        rName.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER)  {
-                    Customer customer=repairController.findCustomer(rName.getText());
-                    if(customer!=null){
-                        rCarNo.setText(customer.getCarNo());
-                        rCarName.setValue(customer.getCarName());
-                        repairController.findCarDetailsByCarName(customer.getCarName());
-                        rDetailsTable.setItems(repairController.getCarDetailsObservableList());
-                    }
-
+        rName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER)  {
+                Customer customer=repairController.findCustomer(rName.getText());
+                if(customer!=null){
+                    rCarNo.setText(customer.getCarNo());
+                    rCarName.setValue(customer.getCarName());
+                    repairController.findCarDetailsByCarName(customer.getCarName());
+                    rDetailsTable.setItems(repairController.getCarDetailsObservableList());
                 }
-            }
-        });
-        rcSelect.setCellFactory(new Callback<TableColumn<CarDetailsBind, Boolean>, TableCell<CarDetailsBind, Boolean>>() {
-            @Override
-            public TableCell<CarDetailsBind, Boolean> call(TableColumn<CarDetailsBind, Boolean> param) {
-                return new CheckBoxTableCell<CarDetailsBind, Boolean>();
-            }
-        });
-        radd.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                List<CarDetails> details=new ArrayList<CarDetails>();
-                Double totalPrice=0.0;
-                for (CarDetailsBind c:rDetailsTable.getItems()
-                     ) {
-                    if(c.getSelect()){
-                        Double price=Double.valueOf(c.getPrice());
-                        totalPrice+=price;
-                        CarDetails cd=new CarDetails(0L,c.getProvider(),c.getDepartName(),price);
-                        details.add(cd);
-                    }
-                }
-                repairController.addRepair(rName.getText(),rCarNo.getText(),rCarName.getValue().toString(),totalPrice,details);
-                Alert alert=new Alert(Alert.AlertType.INFORMATION,"添加成功");
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        clearRepairField();
-                    }
-                });
-
 
             }
         });
-        rQuery.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                repairController.findRepairs();
-                rRepairTable.setItems(repairController.getRepairObservableList());
-            }
+        rcSelect.setCellFactory(param -> {
+            return new CheckBoxTableCell<CarDetailsBind, Boolean>();
         });
-        rRepairTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<RepairHistoryBind>() {
-            @Override
-            public void changed(ObservableValue<? extends RepairHistoryBind> observable, RepairHistoryBind oldValue, RepairHistoryBind newValue) {
-                if(newValue!=null){
-                    repairController.findRepairDetails(Long.valueOf(newValue.getId()));
-                    rRepairDetailsTable.setItems(repairController.getRepairDetailObservableList());
+        radd.setOnAction(event -> {
+            List<CarDetails> details=new ArrayList<CarDetails>();
+            Double totalPrice=0.0;
+            for (CarDetailsBind c:rDetailsTable.getItems()
+                    ) {
+                if(c.getSelect()){
+                    Double price=Double.valueOf(c.getPrice());
+                    totalPrice+=price;
+                    CarDetails cd=new CarDetails(0L,c.getProvider(),c.getDepartName(),price);
+                    details.add(cd);
                 }
             }
+            repairController.addRepair(rName.getText(),rCarNo.getText(),rCarName.getValue().toString(),totalPrice,details);
+            Alert alert=new Alert(Alert.AlertType.INFORMATION,"添加成功");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    clearRepairField();
+                }
+            });
         });
+        rQuery.setOnAction(event -> {
+            repairController.findRepairs();
+            rRepairTable.setItems(repairController.getRepairObservableList());
+        });
+        rRepairTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue!=null){
+                repairController.findRepairDetails(Long.valueOf(newValue.getId()));
+                rRepairDetailsTable.setItems(repairController.getRepairDetailObservableList());
+            }
+        }));
     }
 
     private void initializeNeedInsuranceModule(){
