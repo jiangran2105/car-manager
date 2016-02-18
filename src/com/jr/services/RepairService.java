@@ -73,4 +73,9 @@ public class RepairService {
         });
         return repairHisDetails;
     }
+    public void clearHis(){
+        String sql="delete from reparation;delete from reparation_details;";
+        BaseDao baseDao=new BaseDao();
+        baseDao.executeUpdate(sql,new MapSqlParameterSource());
+    }
 }

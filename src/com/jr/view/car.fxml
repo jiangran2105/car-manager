@@ -9,9 +9,9 @@
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="145.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="编辑">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="clearRH" mnemonicParsing="false" text="清空维修记录" />
             </items>
           </Menu>
         </menus>

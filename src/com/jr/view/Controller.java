@@ -23,6 +23,8 @@ public class Controller {
 
     @FXML
     private TabPane tabPane;
+    @FXML
+    private MenuItem clearRH;
 
     @FXML
     private TextField ctName;
@@ -238,8 +240,11 @@ public class Controller {
                     break;
             }
         }));
-
-
+        clearRH.setOnAction(event -> {
+            RepairController repairController=new RepairController();
+            repairController.clearRepairHis();
+            Alert alert=new Alert(Alert.AlertType.INFORMATION,"清空成功");
+        });
     }
 
     /**
@@ -288,6 +293,13 @@ public class Controller {
      * 初始化车辆信息模块
      */
     private void initializeCarModule(){
+        carName.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)){
+                CarController carController=new CarController();
+                carController.queryDetailByCarName(carName.getText().trim());
+                carDetailsTable.setItems(carController.getCarDetailsObservableList());
+            }
+        });
         cdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         cdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         cdtProvider.setCellValueFactory(c->c.getValue().providerProperty());

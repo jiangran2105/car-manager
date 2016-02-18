@@ -82,5 +82,8 @@ public class RepairController {
             repairDetailObservableList.add(db);
         }
     }
-
+    public void clearRepairHis(){
+        RepairService repairService=new RepairService();
+        repairService.clearHis();
+    }
 }

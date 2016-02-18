@@ -49,4 +49,12 @@ public class CarController {
             carObservableList.add(cb);
         }
     }
+    public void queryDetailByCarName(String carName){
+        List<CarDetails> details = carMsgService.findDetailsByName(carName);
+        for (CarDetails d:details) {
+            CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
+                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty("1"));
+            carDetailsObservableList.add(cdb);
+        }
+    }
 }
