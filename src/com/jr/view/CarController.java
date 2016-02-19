@@ -34,7 +34,7 @@ public class CarController {
         List<CarDetails> details= carMsgService.findDetailsById(carId);
         for (CarDetails d:details) {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
-                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty("1"));
+                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty(String.valueOf(d.getId())));
             carDetailsObservableList.add(cdb);
         }
     }
@@ -53,7 +53,7 @@ public class CarController {
         List<CarDetails> details = carMsgService.findDetailsByName(carName);
         for (CarDetails d:details) {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
-                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty("1"));
+                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty(String.valueOf(d.getId())));
             carDetailsObservableList.add(cdb);
         }
     }

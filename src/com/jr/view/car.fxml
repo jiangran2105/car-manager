@@ -175,15 +175,15 @@
                                                     <RowConstraints />
                                                 </rowConstraints>
                                                 <children>
-                                                    <Label text="姓名" />
-                                                    <Label text="车牌" GridPane.rowIndex="1" />
+                                                    <Label text="姓名(必填)" />
+                                                    <Label text="车牌(必填)" GridPane.rowIndex="1" />
                                                     <Label text="手机号" GridPane.rowIndex="2" />
                                                     <Label text="保险类型" GridPane.rowIndex="3" />
-                                                    <Label text="保险开始日期" GridPane.rowIndex="4" />
-                                                    <Label text="保险到期时间" GridPane.rowIndex="5" />
+                                                    <Label text="保险开始日期(必填)" GridPane.rowIndex="4" />
+                                                    <Label text="保险到期时间(必填)" GridPane.rowIndex="5" />
                                                     <Label text="车架号" GridPane.rowIndex="6" />
-                                                    <Label text="验车日期" GridPane.rowIndex="7" />
-                                                    <Label text="车型" GridPane.rowIndex="8" />
+                                                    <Label text="验车日期(必填)" GridPane.rowIndex="7" />
+                                                    <Label text="车型(必填)" GridPane.rowIndex="8" />
                                                     <TextField fx:id="ctName" GridPane.columnIndex="1" />
                                                     <TextField fx:id="ctCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                     <TextField fx:id="ctMobile" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -198,6 +198,7 @@
                                             <HBox layoutX="88.0" layoutY="235.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="280.0">
                                                 <children>
                                                     <Button fx:id="ctAdd" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="确定" />
+                                                    <Button fx:id="ctClear" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="清空" />
                                                 </children>
                                             </HBox>
                                         </children>
@@ -211,6 +212,7 @@
                                                     <Label text="车牌" />
                                                     <TextField fx:id="ctqCarNo"/>
                                                     <Button fx:id="ctquery" mnemonicParsing="false" text="查询" />
+                                                    <Button fx:id="ctDelete" mnemonicParsing="false" text="删除选中用户" />
                                                 </children>
                                                 <padding>
                                                     <Insets top="2.0" />
@@ -218,6 +220,7 @@
                                             </HBox>
                                             <TableView fx:id="ctTable" layoutX="84.0" layoutY="72.0" prefHeight="374.0" prefWidth="557.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                 <columns>
+                                                    <TableColumn fx:id="ctcSelect" prefWidth="75.0" text="多选框" />
                                                     <TableColumn fx:id="ctcName" prefWidth="75.0" text="姓名" />
                                                     <TableColumn fx:id="ctcCarNo" prefWidth="75.0" text="车牌" />
                                                     <TableColumn fx:id="ctcCarName" prefWidth="75.0" text="车型" />
@@ -263,7 +266,7 @@
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                         </rowConstraints>
                                                          <children>
-                                                            <Label text="车主名" />
+                                                            <Label text="车主名(必填)" />
                                                             <Label text="车牌号" GridPane.rowIndex="1" />
                                                             <Label text="车型" GridPane.rowIndex="2" />
                                                             <Label visible="false" text="总价" GridPane.rowIndex="3" />
@@ -306,9 +309,9 @@
                                                       <HBox layoutX="42.0" layoutY="19.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                                                          <children>
                                                             <Label layoutX="42.0" layoutY="23.0" text="车主名" />
-                                                            <TextField layoutX="86.0" layoutY="19.0" />
+                                                            <TextField fx:id="rqCusName" layoutX="86.0" layoutY="19.0" />
                                                             <Label layoutX="242.0" layoutY="23.0" text="车牌号" />
-                                                            <TextField layoutX="282.0" layoutY="19.0" />
+                                                            <TextField fx:id="rqCarNo" layoutX="282.0" layoutY="19.0" />
                                                             <Button fx:id="rQuery" layoutX="445.0" layoutY="19.0" mnemonicParsing="false" text="查询" />
                                                          </children>
                                                       </HBox>

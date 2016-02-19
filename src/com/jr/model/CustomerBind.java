@@ -1,5 +1,7 @@
 package com.jr.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -41,6 +43,20 @@ public class CustomerBind {
      */
     private StringProperty driveNo;
 
+    public boolean getSelect() {
+        return select.get();
+    }
+
+    public BooleanProperty selectProperty() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select.set(select);
+    }
+
+    private BooleanProperty select;
+
     public CustomerBind(String id,String name, String carNo, String moblie, String insurance, String insuranceStartDate, String insuranceEndDate, String carName, String driveNo, String checkDate) {
         this.id=new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
@@ -52,6 +68,7 @@ public class CustomerBind {
         this.carName = new SimpleStringProperty(carName);
         this.driveNo = new SimpleStringProperty(driveNo);
         this.checkDate = new SimpleStringProperty(checkDate);
+        this.select=new SimpleBooleanProperty(false);
     }
 
     /**

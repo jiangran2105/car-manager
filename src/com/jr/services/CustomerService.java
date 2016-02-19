@@ -88,5 +88,10 @@ public class CustomerService {
         });
         return  customers.size()>0?customers.get(0):null;
     }
+    public void deleteById(String id){
+        String sql="delete from customer where id in("+id+")";
+        BaseDao baseDao=new BaseDao();
+        baseDao.executeUpdate(sql,new MapSqlParameterSource());
+    }
 
 }

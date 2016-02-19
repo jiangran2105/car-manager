@@ -44,8 +44,15 @@ public class RepairService {
             baseDao.executeUpdate(sql3,param);
         }
     }
-    public List<RepairHistory> findRepairHis(){
-        String sql="select * from reparation order by createDate desc";
+    public List<RepairHistory> findRepairHis(String name,String carNo){
+        String sql="select * from reparation where 1=1 ";
+        if(!carNo.equals("")){
+            sql+=" and carNo like '%"+carNo+"%'";
+        }
+        if(!name.equals("")){
+            sql+=" and customerName like '%"+name+"%'";
+        }
+        sql+="order by createDate desc";
         BaseDao baseDao=new BaseDao();
         List<RepairHistory> repairHistories = baseDao.executeQuery(sql, new MapSqlParameterSource(), new RowMapper<RepairHistory>() {
             @Override

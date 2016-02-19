@@ -3,6 +3,7 @@ import com.jr.model.*;
 import com.jr.services.NotifyType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -47,14 +48,20 @@ public class Controller {
     @FXML
     private Button ctAdd;
     @FXML
+    private Button ctClear;
+    @FXML
     private TextField ctqCarNo;
     @FXML
     private TextField ctqName;
     @FXML
     private Button ctquery;
+    @FXML
+    private Button ctDelete;
 
     @FXML
     private TableView<CustomerBind> ctTable;
+    @FXML
+    private TableColumn<CustomerBind,Boolean> ctcSelect;
     @FXML
     private TableColumn<CustomerBind, String> ctcName;
     @FXML
@@ -142,6 +149,10 @@ public class Controller {
     @FXML
     private Button rQuery;
     @FXML
+    private TextField rqCusName;
+    @FXML
+    private TextField rqCarNo;
+    @FXML
     private TableView<RepairHistoryBind> rRepairTable;
     @FXML
     private TableColumn<RepairHistoryBind, String> rcCustomer;
@@ -163,7 +174,7 @@ public class Controller {
     @FXML
     private TableColumn<RepairHistoryDetailBind, String> rdcProvider;
 
-    /*************维修信息**************/
+    /*************保险到期提醒**************/
     @FXML
     private TableView<CustomerBind> niTable;
     @FXML
@@ -184,7 +195,7 @@ public class Controller {
     private TableColumn<CustomerBind, String> cniCarName;
     @FXML
     private TableColumn<CustomerBind, String> cniCheckDate;
-
+    /*************车检到期提醒**************/
     @FXML
     private TableView<CustomerBind> ncTable;
     @FXML
@@ -252,7 +263,6 @@ public class Controller {
      */
     private void initializeCustomerModule(){
         CustomerController customerController=new CustomerController();
-        customerController.initializeCarComobox(ctCar);
         ctcName.setCellValueFactory(c->c.getValue().nameProperty());
         ctcCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
         ctcMoblie.setCellValueFactory(c->c.getValue().moblieProperty());
@@ -262,18 +272,45 @@ public class Controller {
         ctcCarName.setCellValueFactory(c->c.getValue().carNameProperty());
         ctcDriveNo.setCellValueFactory(c->c.getValue().driveNoProperty());
         ctcCheckDate.setCellValueFactory(c->c.getValue().checkDateProperty());
+        ctcSelect.setCellValueFactory(c->c.getValue().selectProperty());
+        ctcSelect.setCellFactory(param -> {
+            return new CheckBoxTableCell<CustomerBind,Boolean>();
+        });
         ctAdd.setOnAction(event1 -> {
             customerController.addCustomer(ctName.getText(),ctCarNo.getText(),ctMobile.getText(),
                     ctInsurance.getText(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
                     ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getValue().toString(),ctDriveNo.getText(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
             ctTable.setItems(customerController.getCustomerObservableList());
         });
-
+        ctClear.setOnAction(event1 -> {
+            this.clearCustomerField();
+        });
         ctquery.setOnAction(event -> {
             customerController.queryCustomer(ctqName.getText(),ctqCarNo.getText());
             ctTable.setItems(customerController.getCustomerObservableList());
         });
-
+        ctDelete.setOnAction(event -> {
+            StringBuilder id=new StringBuilder();
+            ObservableList<CustomerBind> items = ctTable.getItems();
+            for (CustomerBind cb:items
+                 ) {
+                if(cb.getSelect()){
+                    id.append(cb.getId()).append(",");
+                }
+            }
+            if(id.length()>0){
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除选中用户吗",ButtonType.OK);
+                alert.showAndWait().ifPresent(r->{
+                    if (r==ButtonType.OK){
+                        customerController.deleteCustomer(ctqName.getText(),ctqCarNo.getText(),id.substring(0,id.length()-1));
+                        ctTable.setItems(customerController.getCustomerObservableList());
+                    }
+                });
+            }else {
+                Alert alert=new Alert(Alert.AlertType.INFORMATION,"请选择至少一个用户",ButtonType.OK);
+                alert.show();
+            }
+        });
         ctTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if(newValue!=null){
                 ctName.setText(newValue.getName());
@@ -364,6 +401,12 @@ public class Controller {
         rcSelect.setCellFactory(param -> {
             return new CheckBoxTableCell<CarDetailsBind, Boolean>();
         });
+        rCarName.getSelectionModel().selectedItemProperty().addListener(((observable1, oldValue1, newValue1) -> {
+            if(newValue1!=null&&!newValue1.toString().equals("")){
+                repairController.findCarDetailsByCarName(newValue1.toString());
+                rDetailsTable.setItems(repairController.getCarDetailsObservableList());
+            }
+        }));
         radd.setOnAction(event -> {
             List<CarDetails> details=new ArrayList<CarDetails>();
             Double totalPrice=0.0;
@@ -385,7 +428,7 @@ public class Controller {
             });
         });
         rQuery.setOnAction(event -> {
-            repairController.findRepairs();
+            repairController.findRepairs(rqCusName.getText().trim(),rqCarNo.getText().trim());
             rRepairTable.setItems(repairController.getRepairObservableList());
         });
         rRepairTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
@@ -420,6 +463,9 @@ public class Controller {
     }
 
     private void clearCustomerField(){
+        CustomerController customerController=new CustomerController();
+        customerController.initializeCarComobox(ctCar);
+        customerController.isEdit=0;
         ctName.clear();
         ctCarNo.clear();
         ctMobile.clear();
@@ -445,6 +491,8 @@ public class Controller {
 
     }
     private void clearRepairField(){
+        CustomerController customerController=new CustomerController();
+        customerController.initializeCarComobox(rCarName);
         rName.clear();
         rCarNo.clear();
         rCarName.setValue("");

@@ -52,10 +52,10 @@ public class RepairController {
             carDetailsObservableList.add(cdb);
         }
     }
-    public void findRepairs(){
+    public void findRepairs(String name,String carNo){
         repairObservableList.clear();
         RepairService repairService=new RepairService();
-        List<RepairHistory> repairHis = repairService.findRepairHis();
+        List<RepairHistory> repairHis = repairService.findRepairHis(name, carNo);
         for (RepairHistory rh:repairHis
              ) {
             RepairHistoryBind rhb=new RepairHistoryBind(new SimpleStringProperty(String.valueOf(rh.getId())),

@@ -4,6 +4,7 @@ package com.jr.model;
  * Created by jiangran on 16-2-5.
  */
 public class CarDetails {
+    private long id;
     private long carId;
     /**
      * 配件信息
@@ -56,5 +57,21 @@ public class CarDetails {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDepartName() {
+        return departName;
+    }
+
+    public void setDepartName(String departName) {
+        this.departName = departName;
     }
 }

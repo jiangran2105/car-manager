@@ -65,5 +65,22 @@ public class CustomerController {
                 String.valueOf(c.getDriveNo()),
                 String.valueOf(format.format(new Date(c.getCheckDate()))))).collect(Collectors.toList()));
     }
+    public void deleteCustomer(String name,String carNo,String id){
+        CustomerService cs=new CustomerService();
+        cs.deleteById(id);
+        List<Customer> customers=cs.queryCustomer(carNo,name);
+        customerObservableList.clear();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        customerObservableList.addAll(customers.stream().map(c -> new CustomerBind(String.valueOf(c.getId()),
+                String.valueOf(c.getName()),
+                String.valueOf(c.getCarNo()),
+                String.valueOf(c.getMoblie()),
+                String.valueOf(c.getInsurance()),
+                String.valueOf(format.format(new Date(c.getInsuranceStartDate()))),
+                String.valueOf(format.format(new Date(c.getInsuranceEndDate()))),
+                String.valueOf(c.getCarName()),
+                String.valueOf(c.getDriveNo()),
+                String.valueOf(format.format(new Date(c.getCheckDate()))))).collect(Collectors.toList()));
+    }
 
 }
