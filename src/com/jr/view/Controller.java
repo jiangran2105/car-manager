@@ -405,7 +405,7 @@ public class Controller {
             }
         }));
         rCarNo.getSelectionModel().selectedItemProperty().addListener(((observable2, oldValue2, newValue2) -> {
-            if(newValue2!=null){
+            if(newValue2!=null&&!newValue2.equals("")){
                 Customer customer = repairController.findCustomerByCarNo(newValue2.toString().trim());
                 rCarName.setValue(customer.getCarName());
                 repairController.findCarDetailsByCarName(customer.getCarName());
