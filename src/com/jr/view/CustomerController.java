@@ -28,6 +28,7 @@ public class CustomerController {
 
     public void initializeCarComobox(ComboBox box){
         box.setValue("请选择车型");
+        box.getItems().clear();
         CarMsgService cms=new CarMsgService();
         List<Car> carList=cms.findAllCar("");
         for (Car c:carList

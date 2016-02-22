@@ -72,8 +72,8 @@ public class CustomerService {
         });
         return customers;
     }
-    public Customer queryCustomerByName(String name){
-        String sql="select id,userName,carNo,mobile,insurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where userName='"+name+"' limit 1";
+    public List<Customer> queryCustomerByName(String name){
+        String sql="select id,userName,carNo,mobile,insurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where userName='"+name+"'";
         BaseDao baseDao=new BaseDao();
         List<Customer> customers=baseDao.executeQuery(sql,new MapSqlParameterSource(), new RowMapper<Customer>() {
             @Override
@@ -86,7 +86,23 @@ public class CustomerService {
                 return customer;
             }
         });
-        return  customers.size()>0?customers.get(0):null;
+        return customers;
+    }
+    public Customer queryCustomerByCarNo(String carNo){
+        String sql="select id,userName,carNo,mobile,insurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where carNo='"+carNo+"'";
+        BaseDao baseDao=new BaseDao();
+        List<Customer> customers=baseDao.executeQuery(sql,new MapSqlParameterSource(), new RowMapper<Customer>() {
+            @Override
+            public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
+                Customer customer=new Customer(resultSet.getLong("id"),resultSet.getString("userName")
+                        ,resultSet.getString("carNo"),resultSet.getString("mobile")
+                        ,resultSet.getString("insurance"),resultSet.getLong("insuranceStartDate")
+                        ,resultSet.getLong("insuranceEndDate"),resultSet.getString("carName")
+                        ,resultSet.getString("driveNo"),resultSet.getLong("checkDate"));
+                return customer;
+            }
+        });
+        return customers.get(0);
     }
     public void deleteById(String id){
         String sql="delete from customer where id in("+id+")";

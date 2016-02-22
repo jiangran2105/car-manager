@@ -7,10 +7,13 @@ import com.jr.services.RepairService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.text.DateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by jiangran on 16-2-13.
@@ -32,11 +35,11 @@ public class RepairController {
         return repairDetailObservableList;
     }
 
-    public Customer findCustomer(String name){
+    /*public Customer findCustomer(String name){
         CustomerService cs=new CustomerService();
         Customer customer=cs.queryCustomerByName(name);
         return customer;
-    }
+    }*/
     public void addRepair(String customerName, String carNo, String carName, double price, List<CarDetails> details){
         RepairService repairService=new RepairService();
         repairService.addRepair(customerName, carNo, carName, price, details);
@@ -85,5 +88,29 @@ public class RepairController {
     public void clearRepairHis(){
         RepairService repairService=new RepairService();
         repairService.clearHis();
+    }
+    public void initializeCustomerComobox(ComboBox box){
+        box.setValue("请选择车主");
+        box.getItems().clear();
+        CustomerService customerService=new CustomerService();
+        List<Customer> customers = customerService.queryCustomer("", "");
+        List<String> CNames= customers.stream().map(customer -> {return customer.getName();}).distinct().collect(Collectors.toList());
+        CNames.forEach(c->box.getItems().addAll(c));
+
+    }
+    public Customer initializeCarNoComobox(ComboBox box,String cusName){
+        box.setValue("");
+        box.getItems().clear();
+        CustomerService customerService=new CustomerService();
+        List<Customer> customers = customerService.queryCustomerByName(cusName);
+        if(customers.size()>1){
+            customers.forEach(c->box.getItems().add(c.getCarNo()));
+        }
+        return customers.size()>0?customers.get(0):null;
+    }
+    public Customer findCustomerByCarNo(String carNo){
+        CustomerService customerService=new CustomerService();
+        Customer customer = customerService.queryCustomerByCarNo(carNo);
+        return customer;
     }
 }

@@ -83,7 +83,7 @@ public class Controller {
 
     /*************车辆信息**************/
     @FXML
-    private TextField carName;
+    private ComboBox carName;
     @FXML
     private TextField carDepart;
     @FXML
@@ -126,9 +126,9 @@ public class Controller {
 
     /*************维修信息**************/
     @FXML
-    private TextField rName;
+    private ComboBox rName;
     @FXML
-    private TextField rCarNo;
+    private ComboBox rCarNo;
     @FXML
     private ComboBox rCarName;
     @FXML
@@ -333,17 +333,24 @@ public class Controller {
         carName.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)){
                 CarController carController=new CarController();
-                carController.queryDetailByCarName(carName.getText().trim());
+                carController.queryDetailByCarName(carName.getValue().toString().trim());
                 carDetailsTable.setItems(carController.getCarDetailsObservableList());
             }
         });
+        carName.getSelectionModel().selectedItemProperty().addListener(((observable1, oldValue1, newValue1) -> {
+            if(newValue1!=null){
+                CarController carController=new CarController();
+                carController.queryDetailByCarName(carName.getValue().toString().trim());
+                carDetailsTable.setItems(carController.getCarDetailsObservableList());
+            }
+        }));
         cdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         cdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         cdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
         cdtId.setCellValueFactory(c->c.getValue().idProperty());
         carAdd.setOnAction(event -> {
             CarController carController=new CarController();
-            carController.addCarMsg(carName.getText(),carDepart.getText(),Double.valueOf(carPrice.getText()),carProvider.getText());
+            carController.addCarMsg(carName.getValue().toString().trim(),carDepart.getText(),Double.valueOf(carPrice.getText()),carProvider.getText());
             carDetailsTable.setItems(carController.getCarDetailsObservableList());
         });
         cId.setCellValueFactory(c->c.getValue().idProperty());
@@ -386,18 +393,25 @@ public class Controller {
         rdcProvider.setCellValueFactory(c->c.getValue().providerProperty());
         rdcPrice.setCellValueFactory(c->c.getValue().priceProperty());
 
-        rName.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER)  {
-                Customer customer=repairController.findCustomer(rName.getText());
+        rName.getSelectionModel().selectedItemProperty().addListener(((observable2, oldValue2, newValue2) -> {
+            if(newValue2!=null){
+                Customer customer = repairController.initializeCarNoComobox(rCarNo, newValue2.toString().trim());
                 if(customer!=null){
-                    rCarNo.setText(customer.getCarNo());
+                    rCarNo.setValue(customer.getCarNo());
                     rCarName.setValue(customer.getCarName());
                     repairController.findCarDetailsByCarName(customer.getCarName());
                     rDetailsTable.setItems(repairController.getCarDetailsObservableList());
                 }
-
             }
-        });
+        }));
+        rCarNo.getSelectionModel().selectedItemProperty().addListener(((observable2, oldValue2, newValue2) -> {
+            if(newValue2!=null){
+                Customer customer = repairController.findCustomerByCarNo(newValue2.toString().trim());
+                rCarName.setValue(customer.getCarName());
+                repairController.findCarDetailsByCarName(customer.getCarName());
+                rDetailsTable.setItems(repairController.getCarDetailsObservableList());
+            }
+        }));
         rcSelect.setCellFactory(param -> {
             return new CheckBoxTableCell<CarDetailsBind, Boolean>();
         });
@@ -419,7 +433,7 @@ public class Controller {
                     details.add(cd);
                 }
             }
-            repairController.addRepair(rName.getText(),rCarNo.getText(),rCarName.getValue().toString(),totalPrice,details);
+            repairController.addRepair(rName.getValue().toString().trim(),rCarNo.getValue().toString().trim(),rCarName.getValue().toString(),totalPrice,details);
             Alert alert=new Alert(Alert.AlertType.INFORMATION,"添加成功");
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
@@ -439,6 +453,9 @@ public class Controller {
         }));
     }
 
+    /**
+     * 初始化保险提醒模块
+     */
     private void initializeNeedInsuranceModule(){
         cniName.setCellValueFactory(c->c.getValue().nameProperty());
         cniCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
@@ -450,6 +467,10 @@ public class Controller {
         cniDriveNo.setCellValueFactory(c->c.getValue().driveNoProperty());
         cniCheckDate.setCellValueFactory(c->c.getValue().checkDateProperty());
     }
+
+    /**
+     * 初始化车检提醒模块
+     */
     private void initializeNeedCheckModule(){
         cncName.setCellValueFactory(c->c.getValue().nameProperty());
         cncCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
@@ -480,7 +501,8 @@ public class Controller {
         ctTable.getItems().clear();
     }
     private void clearCarField(){
-        carName.clear();
+        CarController carController=new CarController();
+        carController.initializeCarComobox(carName);
         carDepart.clear();
         carPrice.clear();
         carProvider.clear();
@@ -492,9 +514,11 @@ public class Controller {
     }
     private void clearRepairField(){
         CustomerController customerController=new CustomerController();
+        RepairController repairController=new RepairController();
         customerController.initializeCarComobox(rCarName);
-        rName.clear();
-        rCarNo.clear();
+        rCarNo.getItems().clear();
+        rCarNo.setValue("");
+        repairController.initializeCustomerComobox(rName);
         rCarName.setValue("");
         rDetailsTable.getItems().clear();
     }

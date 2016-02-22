@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.util.List;
 
@@ -55,6 +56,15 @@ public class CarController {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
                     new SimpleStringProperty(d.getProvider()),new SimpleStringProperty(String.valueOf(d.getId())));
             carDetailsObservableList.add(cdb);
+        }
+    }
+    public void initializeCarComobox(ComboBox box){
+        box.setValue("");
+        box.getItems().clear();
+        List<Car> carList=carMsgService.findAllCar("");
+        for (Car c:carList
+                ) {
+            box.getItems().add(c.getName());
         }
     }
 }
