@@ -1,6 +1,5 @@
 package com.jr.view;
 
-import com.jr.model.Car;
 import com.jr.model.Customer;
 import com.jr.model.CustomerBind;
 import com.jr.services.CarMsgService;
@@ -26,23 +25,13 @@ public class CustomerController {
         return customerObservableList;
     }
 
-    public void initializeCarComobox(ComboBox box){
-        box.setValue("请选择车型");
-        box.getItems().clear();
-        CarMsgService cms=new CarMsgService();
-        List<Car> carList=cms.findAllCar("");
-        for (Car c:carList
-             ) {
-            box.getItems().add(c.getName());
-        }
-    }
-    public void addCustomer(String userName,String carNo,String mobile,String insurance,
+    public void addCustomer(String userName,String carNo,String mobile,String manInsurance,String busInsurance,
                             Long insuranceStartDate,Long insuranceEndDate,String carname,String driveNo,Long checkDate ){
         CustomerService cs=new CustomerService();
         if(isEdit!=0L){
-            cs.updateCustomer(userName, carNo, mobile, insurance, insuranceStartDate, insuranceEndDate, carname, driveNo, checkDate,isEdit);
+            cs.updateCustomer(userName, carNo, mobile, manInsurance,busInsurance, insuranceStartDate, insuranceEndDate, carname, driveNo, checkDate,isEdit);
         }else {
-            cs.addCustomer(userName, carNo, mobile, insurance, insuranceStartDate, insuranceEndDate, carname, driveNo, checkDate);
+            cs.addCustomer(userName, carNo, mobile, manInsurance,busInsurance, insuranceStartDate, insuranceEndDate, carname, driveNo, checkDate);
         }
         queryAllCustomer();
         isEdit=0L;
@@ -59,7 +48,8 @@ public class CustomerController {
                 String.valueOf(c.getName()),
                 String.valueOf(c.getCarNo()),
                 String.valueOf(c.getMoblie()),
-                String.valueOf(c.getInsurance()),
+                String.valueOf(c.getManInsurance()),
+                String.valueOf(c.getBusInsurance()),
                 String.valueOf(format.format(new Date(c.getInsuranceStartDate()))),
                 String.valueOf(format.format(new Date(c.getInsuranceEndDate()))),
                 String.valueOf(c.getCarName()),
@@ -76,7 +66,8 @@ public class CustomerController {
                 String.valueOf(c.getName()),
                 String.valueOf(c.getCarNo()),
                 String.valueOf(c.getMoblie()),
-                String.valueOf(c.getInsurance()),
+                String.valueOf(c.getManInsurance()),
+                String.valueOf(c.getBusInsurance()),
                 String.valueOf(format.format(new Date(c.getInsuranceStartDate()))),
                 String.valueOf(format.format(new Date(c.getInsuranceEndDate()))),
                 String.valueOf(c.getCarName()),

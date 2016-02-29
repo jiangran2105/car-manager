@@ -23,9 +23,13 @@ public class CustomerBind {
      */
     private StringProperty moblie;
     /**
-     * 保险名称，人保，平安。。。
+     * 交强险
      */
-    private StringProperty insurance;
+    private StringProperty manInsurance;
+    /**
+     * 商业险
+     */
+    private StringProperty busInsurance;
     /**
      * 保险开始日期
      */
@@ -57,12 +61,13 @@ public class CustomerBind {
 
     private BooleanProperty select;
 
-    public CustomerBind(String id,String name, String carNo, String moblie, String insurance, String insuranceStartDate, String insuranceEndDate, String carName, String driveNo, String checkDate) {
+    public CustomerBind(String id,String name, String carNo, String moblie, String manInsurance,String busInsurance, String insuranceStartDate, String insuranceEndDate, String carName, String driveNo, String checkDate) {
         this.id=new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
         this.carNo = new SimpleStringProperty(carNo);
         this.moblie = new SimpleStringProperty(moblie);
-        this.insurance = new SimpleStringProperty(insurance);
+        this.manInsurance = new SimpleStringProperty(manInsurance);
+        this.busInsurance=new SimpleStringProperty(busInsurance);
         this.insuranceStartDate = new SimpleStringProperty(insuranceStartDate);
         this.insuranceEndDate = new SimpleStringProperty(insuranceEndDate);
         this.carName = new SimpleStringProperty(carName);
@@ -127,16 +132,28 @@ public class CustomerBind {
         this.moblie.set(moblie);
     }
 
-    public String getInsurance() {
-        return insurance.get();
+    public String getManInsurance() {
+        return manInsurance.get();
     }
 
-    public StringProperty insuranceProperty() {
-        return insurance;
+    public StringProperty manInsuranceProperty() {
+        return manInsurance;
     }
 
-    public void setInsurance(String insurance) {
-        this.insurance.set(insurance);
+    public void setManInsurance(String manInsurance) {
+        this.manInsurance.set(manInsurance);
+    }
+
+    public String getBusInsurance() {
+        return busInsurance.get();
+    }
+
+    public StringProperty busInsuranceProperty() {
+        return busInsurance;
+    }
+
+    public void setBusInsurance(String busInsurance) {
+        this.busInsurance.set(busInsurance);
     }
 
     public String getInsuranceStartDate() {

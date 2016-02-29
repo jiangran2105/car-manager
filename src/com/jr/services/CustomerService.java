@@ -13,15 +13,16 @@ import java.util.List;
  * Created by jiangran on 16-2-5.
  */
 public class CustomerService {
-    public void addCustomer(String userName,String carNo,String mobile,String insurance,
+    public void addCustomer(String userName,String carNo,String mobile,String manInsurance,String busInsurance,
                             Long insuranceStartDate,Long insuranceEndDate,String carname,String driveNo,Long checkDate){
-        String sql="insert into customer(id,userName,carNo,mobile,insurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate) " +
-                "values(null,:userName,:carNo,:mobile,:insurance,:insuranceStartDate,:insuranceEndDate,:carName,:driveNo,:checkDate)";
+        String sql="insert into customer(id,userName,carNo,mobile,manInsurance,busInsurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate) " +
+                "values(null,:userName,:carNo,:mobile,:manInsurance,:busInsurance,:insuranceStartDate,:insuranceEndDate,:carName,:driveNo,:checkDate)";
         MapSqlParameterSource parameterSource=new MapSqlParameterSource();
         parameterSource.addValue("userName",userName);
         parameterSource.addValue("carNo",carNo);
         parameterSource.addValue("mobile",mobile);
-        parameterSource.addValue("insurance",insurance);
+        parameterSource.addValue("manInsurance",manInsurance);
+        parameterSource.addValue("busInsurance",busInsurance);
         parameterSource.addValue("insuranceStartDate",insuranceStartDate);
         parameterSource.addValue("insuranceEndDate",insuranceEndDate);
         parameterSource.addValue("carName",carname);
@@ -30,16 +31,18 @@ public class CustomerService {
         BaseDao baseDao=new BaseDao();
         baseDao.executeUpdate(sql,parameterSource);
     }
-    public void updateCustomer(String userName,String carNo,String mobile,String insurance,
+    public void updateCustomer(String userName,String carNo,String mobile,String manInsurance,String busInsurance,
                             Long insuranceStartDate,Long insuranceEndDate,String carname,String driveNo,Long checkDate,Long id){
-        String sql="update customer set userName=:userName,carNo=:carNo,mobile=:mobile,insurance=:insurance," +
-                "insuranceStartDate=:insuranceStartDate,insuranceEndDate=:insuranceEndDate,carName=:carName,driveNo=:driveNo,checkDate=:checkDate " +
+        String sql="update customer set userName=:userName,carNo=:carNo,mobile=:mobile,manInsurance=:manInsurance," +
+                "busInsurance=:busInsurance,insuranceStartDate=:insuranceStartDate,insuranceEndDate=:insuranceEndDate," +
+                "carName=:carName,driveNo=:driveNo,checkDate=:checkDate " +
                 " where id=:id";
         MapSqlParameterSource parameterSource=new MapSqlParameterSource();
         parameterSource.addValue("userName",userName);
         parameterSource.addValue("carNo",carNo);
         parameterSource.addValue("mobile",mobile);
-        parameterSource.addValue("insurance",insurance);
+        parameterSource.addValue("manInsurance",manInsurance);
+        parameterSource.addValue("busInsurance",busInsurance);
         parameterSource.addValue("insuranceStartDate",insuranceStartDate);
         parameterSource.addValue("insuranceEndDate",insuranceEndDate);
         parameterSource.addValue("carName",carname);
@@ -64,7 +67,7 @@ public class CustomerService {
             public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
                 Customer customer=new Customer(resultSet.getLong("id"),resultSet.getString("userName")
                         ,resultSet.getString("carNo"),resultSet.getString("mobile")
-                        ,resultSet.getString("insurance"),resultSet.getLong("insuranceStartDate")
+                        ,resultSet.getString("manInsurance"),resultSet.getString("busInsurance"),resultSet.getLong("insuranceStartDate")
                         ,resultSet.getLong("insuranceEndDate"),resultSet.getString("carName")
                         ,resultSet.getString("driveNo"),resultSet.getLong("checkDate"));
                 return customer;
@@ -73,14 +76,14 @@ public class CustomerService {
         return customers;
     }
     public List<Customer> queryCustomerByName(String name){
-        String sql="select id,userName,carNo,mobile,insurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where userName='"+name+"'";
+        String sql="select id,userName,carNo,mobile,manInsurance,busInsurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where userName='"+name+"'";
         BaseDao baseDao=new BaseDao();
         List<Customer> customers=baseDao.executeQuery(sql,new MapSqlParameterSource(), new RowMapper<Customer>() {
             @Override
             public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
                 Customer customer=new Customer(resultSet.getLong("id"),resultSet.getString("userName")
                         ,resultSet.getString("carNo"),resultSet.getString("mobile")
-                        ,resultSet.getString("insurance"),resultSet.getLong("insuranceStartDate")
+                        ,resultSet.getString("manInsurance"),resultSet.getString("busInsurance"),resultSet.getLong("insuranceStartDate")
                         ,resultSet.getLong("insuranceEndDate"),resultSet.getString("carName")
                         ,resultSet.getString("driveNo"),resultSet.getLong("checkDate"));
                 return customer;
@@ -89,14 +92,14 @@ public class CustomerService {
         return customers;
     }
     public Customer queryCustomerByCarNo(String carNo){
-        String sql="select id,userName,carNo,mobile,insurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where carNo='"+carNo+"'";
+        String sql="select id,userName,carNo,mobile,manInsurance,busInsurance,insuranceStartDate,insuranceEndDate,carName,driveNo,checkDate from customer where carNo='"+carNo+"'";
         BaseDao baseDao=new BaseDao();
         List<Customer> customers=baseDao.executeQuery(sql,new MapSqlParameterSource(), new RowMapper<Customer>() {
             @Override
             public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
                 Customer customer=new Customer(resultSet.getLong("id"),resultSet.getString("userName")
                         ,resultSet.getString("carNo"),resultSet.getString("mobile")
-                        ,resultSet.getString("insurance"),resultSet.getLong("insuranceStartDate")
+                        ,resultSet.getString("manInsurance"),resultSet.getString("busInsurance"),resultSet.getLong("insuranceStartDate")
                         ,resultSet.getLong("insuranceEndDate"),resultSet.getString("carName")
                         ,resultSet.getString("driveNo"),resultSet.getLong("checkDate"));
                 return customer;

@@ -18,9 +18,13 @@ public class Customer {
      */
     private String moblie;
     /**
-     * 保险名称，人保，平安。。。
+     * 交强险
      */
-    private String insurance;
+    private String manInsurance;
+    /**
+     * 商业险
+     */
+    private String busInsurance;
     /**
      * 保险开始日期
      */
@@ -43,12 +47,13 @@ public class Customer {
      */
     private long checkDate;
 
-    public Customer(long id, String name, String carNo, String moblie, String insurance, long insuranceStartDate, long insuranceEndDate, String carName, String driveNo, long checkDate) {
+    public Customer(long id, String name, String carNo, String moblie, String manInsurance,String busInsurance, long insuranceStartDate, long insuranceEndDate, String carName, String driveNo, long checkDate) {
         this.id = id;
         this.name = name;
         this.carNo = carNo;
         this.moblie = moblie;
-        this.insurance = insurance;
+        this.manInsurance = manInsurance;
+        this.busInsurance=busInsurance;
         this.insuranceStartDate = insuranceStartDate;
         this.insuranceEndDate = insuranceEndDate;
         this.carName = carName;
@@ -111,14 +116,6 @@ public class Customer {
         this.moblie = moblie;
     }
 
-    public String getInsurance() {
-        return insurance;
-    }
-
-    public void setInsurance(String insurance) {
-        this.insurance = insurance;
-    }
-
     public long getInsuranceStartDate() {
         return insuranceStartDate;
     }
@@ -135,4 +132,19 @@ public class Customer {
         this.insuranceEndDate = insuranceEndDate;
     }
 
+    public String getManInsurance() {
+        return manInsurance;
+    }
+
+    public void setManInsurance(String manInsurance) {
+        this.manInsurance = manInsurance;
+    }
+
+    public String getBusInsurance() {
+        return busInsurance;
+    }
+
+    public void setBusInsurance(String busInsurance) {
+        this.busInsurance = busInsurance;
+    }
 }

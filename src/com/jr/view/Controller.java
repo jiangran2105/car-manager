@@ -34,7 +34,9 @@ public class Controller {
     @FXML
     private TextField ctMobile;
     @FXML
-    private TextField ctInsurance;
+    private TextField ctManInsurance;
+    @FXML
+    private TextArea ctBusInsurance;
     @FXML
     private DatePicker ctInsuranceStartDate;
     @FXML
@@ -44,7 +46,7 @@ public class Controller {
     @FXML
     private DatePicker ctCheckDate;
     @FXML
-    private ComboBox ctCar;
+    private TextField ctCar;
     @FXML
     private Button ctAdd;
     @FXML
@@ -69,7 +71,9 @@ public class Controller {
     @FXML
     private TableColumn<CustomerBind, String> ctcMoblie;
     @FXML
-    private TableColumn<CustomerBind, String> ctcInsurance;
+    private TableColumn<CustomerBind, String> ctcManInsurance;
+    @FXML
+    private TableColumn<CustomerBind, String> ctcBusInsurance;
     @FXML
     private TableColumn<CustomerBind, String> ctcInsuranceStartDate;
     @FXML
@@ -112,14 +116,6 @@ public class Controller {
     private Button carQuery;
     @FXML
     private Button carDelete;
-    @FXML
-    private TableView<CarBind> carTable;
-    @FXML
-    private TableColumn<CarBind,Boolean> cSelect;
-    @FXML
-    private TableColumn<CarBind,String> cName;
-    @FXML
-    private TableColumn<CarBind,String> cId;
     @FXML
     private TextField carQueryName;
 
@@ -192,7 +188,9 @@ public class Controller {
     @FXML
     private TableColumn<CustomerBind, String> cniMoblie;
     @FXML
-    private TableColumn<CustomerBind, String> cniInsurance;
+    private TableColumn<CustomerBind, String> cniManInsurance;
+    @FXML
+    private TableColumn<CustomerBind, String> cniBusInsurance;
     @FXML
     private TableColumn<CustomerBind, String> cniInsuranceStartDate;
     @FXML
@@ -213,7 +211,9 @@ public class Controller {
     @FXML
     private TableColumn<CustomerBind, String> cncMoblie;
     @FXML
-    private TableColumn<CustomerBind, String> cncInsurance;
+    private TableColumn<CustomerBind, String> cncManInsurance;
+    @FXML
+    private TableColumn<CustomerBind, String> cncBusInsurance;
     @FXML
     private TableColumn<CustomerBind, String> cncInsuranceStartDate;
     @FXML
@@ -274,7 +274,8 @@ public class Controller {
         ctcName.setCellValueFactory(c->c.getValue().nameProperty());
         ctcCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
         ctcMoblie.setCellValueFactory(c->c.getValue().moblieProperty());
-        ctcInsurance.setCellValueFactory(c->c.getValue().insuranceProperty());
+        ctcManInsurance.setCellValueFactory(c->c.getValue().manInsuranceProperty());
+        ctcBusInsurance.setCellValueFactory(c->c.getValue().busInsuranceProperty());
         ctcInsuranceStartDate.setCellValueFactory(c->c.getValue().insuranceStartDateProperty());
         ctcInsuranceEndDate.setCellValueFactory(c->c.getValue().insuranceEndDateProperty());
         ctcCarName.setCellValueFactory(c->c.getValue().carNameProperty());
@@ -285,9 +286,9 @@ public class Controller {
             return new CheckBoxTableCell<CustomerBind,Boolean>();
         });
         ctAdd.setOnAction(event1 -> {
-            customerController.addCustomer(ctName.getText(),ctCarNo.getText(),ctMobile.getText(),
-                    ctInsurance.getText(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
-                    ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getValue().toString(),ctDriveNo.getText(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
+            customerController.addCustomer(ctName.getText().trim(),ctCarNo.getText().trim(),ctMobile.getText().trim(),
+                    ctManInsurance.getText().trim(),ctBusInsurance.getText().trim(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
+                    ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getText().trim(),ctDriveNo.getText().trim(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
             ctTable.setItems(customerController.getCustomerObservableList());
         });
         ctClear.setOnAction(event1 -> {
@@ -324,8 +325,9 @@ public class Controller {
                 ctName.setText(newValue.getName());
                 ctCarNo.setText(newValue.getCarNo());
                 ctMobile.setText(newValue.getMoblie());
-                ctInsurance.setText(newValue.getInsurance());
-                ctCar.setValue(newValue.getCarName());
+                ctManInsurance.setText(newValue.getManInsurance());
+                ctBusInsurance.setText(newValue.getBusInsurance());
+                ctCar.setText(newValue.getCarName());
                 ctInsuranceStartDate.setValue(LocalDate.parse(newValue.getInsuranceStartDate()));
                 ctInsuranceEndDate.setValue(LocalDate.parse(newValue.getInsuranceEndDate()));
                 ctCheckDate.setValue(LocalDate.parse(newValue.getCheckDate()));
@@ -360,7 +362,7 @@ public class Controller {
         cdtId.setCellValueFactory(c->c.getValue().idProperty());
         carAdd.setOnAction(event -> {
             CarController carController=new CarController();
-            carController.addCarMsg(carName.getValue().toString().trim(),carDepart.getText(),Double.valueOf(carPrice.getText()),carProvider.getText());
+            carController.addDetails(carDepart.getText(),carPrice.getText().trim(),carProvider.getText());
             carDetailsTable.setItems(carController.getCarDetailsObservableList());
         });
         detailDelete.setOnAction(event1 -> {
@@ -385,47 +387,17 @@ public class Controller {
                 alert.show();
             }
         });
-        cSelect.setCellFactory(param -> {return new CheckBoxTableCell<CarBind,Boolean>();});
-        cSelect.setCellValueFactory(c->c.getValue().selectProperty());
-        cId.setCellValueFactory(c->c.getValue().idProperty());
-        cName.setCellValueFactory(c->c.getValue().carNameProperty());
+
         carQuery.setOnAction(event -> {
             CarController carController=new CarController();
-            carController.queryCars(carQueryName.getText());
-            carTable.setItems(carController.getCarObservableList());
         });
         carDelete.setOnAction(event -> {
             StringBuilder sb=new StringBuilder();
-            carTable.getItems().forEach(carBind -> {
-                if (carBind.getSelect()){
-                    sb.append(carBind.getId()).append(",");
-                }
-            });
-            if(sb.length()>0){
-                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除已选车辆吗");
-                alert.showAndWait().ifPresent(buttonType -> {
-                    if (buttonType.equals(ButtonType.OK)){
-                        CarController carController=new CarController();
-                        carController.deleteCars(sb.substring(0,sb.length()-1));
-                        carController.queryCars(carQueryName.getText());
-                        carTable.setItems(carController.getCarObservableList());
-                    }
-                });
-            }else{
-                Alert alert=new Alert(Alert.AlertType.WARNING,"请选择要删除的车辆");
-                alert.show();
-            }
         });
         ccdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         ccdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         ccdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
-        carTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            if(newValue!=null){
-                CarController carController=new CarController();
-                carController.fillCarDetailsObservableList(Long.valueOf(newValue.getId()));
-                ccDetailsTable.setItems(carController.getCarDetailsObservableList());
-            }
-        }));
+
 
     }
 
@@ -485,7 +457,7 @@ public class Controller {
                 if(c.getSelect()){
                     Double price=Double.valueOf(c.getPrice());
                     totalPrice+=price;
-                    CarDetails cd=new CarDetails(0L,c.getProvider(),c.getDepartName(),price,0);
+                    CarDetails cd=new CarDetails(c.getProvider(),c.getDepartName(),price,0);
                     details.add(cd);
                 }
             }
@@ -516,7 +488,8 @@ public class Controller {
         cniName.setCellValueFactory(c->c.getValue().nameProperty());
         cniCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
         cniMoblie.setCellValueFactory(c->c.getValue().moblieProperty());
-        cniInsurance.setCellValueFactory(c->c.getValue().insuranceProperty());
+        cniManInsurance.setCellValueFactory(c->c.getValue().manInsuranceProperty());
+        cniBusInsurance.setCellValueFactory(c->c.getValue().busInsuranceProperty());
         cniInsuranceStartDate.setCellValueFactory(c->c.getValue().insuranceStartDateProperty());
         cniInsuranceEndDate.setCellValueFactory(c->c.getValue().insuranceEndDateProperty());
         cniCarName.setCellValueFactory(c->c.getValue().carNameProperty());
@@ -531,7 +504,8 @@ public class Controller {
         cncName.setCellValueFactory(c->c.getValue().nameProperty());
         cncCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
         cncMoblie.setCellValueFactory(c->c.getValue().moblieProperty());
-        cncInsurance.setCellValueFactory(c->c.getValue().insuranceProperty());
+        cncManInsurance.setCellValueFactory(c->c.getValue().manInsuranceProperty());
+        cncBusInsurance.setCellValueFactory(c->c.getValue().busInsuranceProperty());
         cncInsuranceStartDate.setCellValueFactory(c->c.getValue().insuranceStartDateProperty());
         cncInsuranceEndDate.setCellValueFactory(c->c.getValue().insuranceEndDateProperty());
         cncCarName.setCellValueFactory(c->c.getValue().carNameProperty());
@@ -541,37 +515,34 @@ public class Controller {
 
     private void clearCustomerField(){
         CustomerController customerController=new CustomerController();
-        customerController.initializeCarComobox(ctCar);
         customerController.isEdit=0;
         ctName.clear();
         ctCarNo.clear();
         ctMobile.clear();
-        ctInsurance.clear();
+        ctManInsurance.clear();
+        ctBusInsurance.clear();
         ctInsuranceStartDate.setValue(null);
         ctInsuranceEndDate.setValue(null);
         ctDriveNo.clear();
         ctCheckDate.setValue(null);
-        ctCar.setValue("请选择车型");
+        ctCar.clear();
         ctqCarNo.clear();
         ctqName.clear();
         ctTable.getItems().clear();
     }
     private void clearCarField(){
         CarController carController=new CarController();
-        carController.initializeCarComobox(carName);
         carDepart.clear();
         carPrice.clear();
         carProvider.clear();
         carQueryName.clear();
         carDetailsTable.getItems().clear();
-        carTable.getItems().clear();
         ccDetailsTable.getItems().clear();
 
     }
     private void clearRepairField(){
         CustomerController customerController=new CustomerController();
         RepairController repairController=new RepairController();
-        customerController.initializeCarComobox(rCarName);
         rCarNo.getItems().clear();
         rCarNo.setValue("");
         repairController.initializeCustomerComobox(rName);

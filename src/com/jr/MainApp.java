@@ -34,11 +34,9 @@ public class MainApp extends Application {
             //建立一个数据库名zieckey.db的连接，如果不存在就在当前目录下创建之
             conn = DriverManager.getConnection("jdbc:sqlite:car.db");
             stat = conn.createStatement();
-
-            stat.executeUpdate("CREATE TABLE IF NOT EXISTS car(id INTEGER PRIMARY KEY, carName TEXT);");//创建一个表，两列
-            stat.executeUpdate("CREATE TABLE IF NOT EXISTS car_details(id INTEGER PRIMARY KEY, carId INTEGER,departName TEXT,price REAL,provider TEXT);");
+            stat.executeUpdate("CREATE TABLE IF NOT EXISTS car_details(id INTEGER PRIMARY KEY, departName TEXT,price REAL,provider TEXT);");
             stat.executeUpdate("CREATE TABLE IF NOT EXISTS customer(id INTEGER PRIMARY KEY, userName TEXT,carNo TEXT,mobile TEXT," +
-                    "insurance TEXT,insuranceStartDate INTEGER,insuranceEndDate INTEGER,carName TEXT,driveNo TEXT,checkDate INTEGER);");
+                    "manInsurance TEXT,busInsurance TEXT,insuranceStartDate INTEGER,insuranceEndDate INTEGER,carName TEXT,driveNo TEXT,checkDate INTEGER);");
             stat.executeUpdate("CREATE TABLE IF NOT EXISTS reparation(id INTEGER PRIMARY KEY, customerName TEXT,carNo TEXT,carName TEXT,createDate INTEGER," +
                     "price REAL,remark TEXT);");
             stat.executeUpdate("CREATE TABLE IF NOT EXISTS reparation_details(id INTEGER PRIMARY KEY, reparId INTEGER,departName TEXT,price REAL,provider TEXT);");
