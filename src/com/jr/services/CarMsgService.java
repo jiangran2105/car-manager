@@ -45,12 +45,12 @@ public class CarMsgService  {
     public Long addRecord(String carName,String departName,double price,String provider){
         Long carId=carIsExist(carName);
         if(carId!=null){
-            CarDetails details=new CarDetails(carId,provider,departName,price);
+            CarDetails details=new CarDetails(carId,provider,departName,price,0);
             this.insertCarDetails(details);
         }else {
             Car car=new Car(0,carName);
             carId=this.insertCar(car);
-            CarDetails details=new CarDetails(carId,provider,departName,price);
+            CarDetails details=new CarDetails(carId,provider,departName,price,0);
             this.insertCarDetails(details);
         }
         return carId;
@@ -77,7 +77,7 @@ public class CarMsgService  {
         List<CarDetails> details=baseDao.executeQuery(sql, namedParameters, new RowMapper<CarDetails>() {
             public CarDetails mapRow(ResultSet resultSet, int i) throws SQLException {
                 CarDetails details=new CarDetails(resultSet.getLong("carId"),resultSet.getString("provider")
-                ,resultSet.getString("departName"),resultSet.getDouble("price"));
+                ,resultSet.getString("departName"),resultSet.getDouble("price"),resultSet.getLong("id"));
                 return details;
             }
         });
@@ -91,10 +91,20 @@ public class CarMsgService  {
         List<CarDetails> details=baseDao.executeQuery(sql, namedParameters, new RowMapper<CarDetails>() {
             public CarDetails mapRow(ResultSet resultSet, int i) throws SQLException {
                 CarDetails details=new CarDetails(resultSet.getLong("carId"),resultSet.getString("provider")
-                        ,resultSet.getString("departName"),resultSet.getDouble("price"));
+                        ,resultSet.getString("departName"),resultSet.getDouble("price"),resultSet.getLong("id"));
                 return details;
             }
         });
         return details;
+    }
+    public void deleteDetailsById(String ids){
+        String sql="delete from car_details where id in("+ids+")";
+        BaseDao baseDao=new BaseDao();
+        baseDao.executeUpdate(sql,new MapSqlParameterSource());
+    }
+    public void deleteCarsById(String ids){
+        String sql="delete from car where id in("+ids+");delete from car_details where carId in("+ids+")";
+        BaseDao baseDao=new BaseDao();
+        baseDao.executeUpdate(sql,new MapSqlParameterSource());
     }
 }

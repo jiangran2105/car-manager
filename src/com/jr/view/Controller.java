@@ -92,9 +92,13 @@ public class Controller {
     private TextField carProvider;
     @FXML
     private Button carAdd;
+    @FXML
+    private Button detailDelete;
 
     @FXML
     private TableView<CarDetailsBind> carDetailsTable;
+    @FXML
+    private TableColumn<CarDetailsBind,Boolean> cdtSelect;
     @FXML
     private TableColumn<CarDetailsBind, String> cdtDepartName;
     @FXML
@@ -107,7 +111,11 @@ public class Controller {
     @FXML
     private Button carQuery;
     @FXML
+    private Button carDelete;
+    @FXML
     private TableView<CarBind> carTable;
+    @FXML
+    private TableColumn<CarBind,Boolean> cSelect;
     @FXML
     private TableColumn<CarBind,String> cName;
     @FXML
@@ -344,6 +352,8 @@ public class Controller {
                 carDetailsTable.setItems(carController.getCarDetailsObservableList());
             }
         }));
+        cdtSelect.setCellFactory(param->{return new CheckBoxTableCell<CarDetailsBind,Boolean>();});
+        cdtSelect.setCellValueFactory(c->c.getValue().selectProperty());
         cdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         cdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
         cdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
@@ -353,12 +363,58 @@ public class Controller {
             carController.addCarMsg(carName.getValue().toString().trim(),carDepart.getText(),Double.valueOf(carPrice.getText()),carProvider.getText());
             carDetailsTable.setItems(carController.getCarDetailsObservableList());
         });
+        detailDelete.setOnAction(event1 -> {
+            StringBuilder sb=new StringBuilder();
+            carDetailsTable.getItems().forEach(carDetailsBind -> {
+                if(carDetailsBind.getSelect()){
+                    sb.append(carDetailsBind.getId()).append(",");
+                }
+            });
+            if(sb.length()>0){
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除已选配件吗");
+                alert.showAndWait().ifPresent(buttonType -> {
+                    if (buttonType.equals(ButtonType.OK)){
+                        CarController carController=new CarController();
+                        carController.deleteCarDetails(sb.substring(0,sb.length()-1));
+                        carController.queryDetailByCarName(carName.getValue().toString().trim());
+                        carDetailsTable.setItems(carController.getCarDetailsObservableList());
+                    }
+                });
+            }else{
+                Alert alert=new Alert(Alert.AlertType.WARNING,"请选择要删除的配件");
+                alert.show();
+            }
+        });
+        cSelect.setCellFactory(param -> {return new CheckBoxTableCell<CarBind,Boolean>();});
+        cSelect.setCellValueFactory(c->c.getValue().selectProperty());
         cId.setCellValueFactory(c->c.getValue().idProperty());
         cName.setCellValueFactory(c->c.getValue().carNameProperty());
         carQuery.setOnAction(event -> {
             CarController carController=new CarController();
             carController.queryCars(carQueryName.getText());
             carTable.setItems(carController.getCarObservableList());
+        });
+        carDelete.setOnAction(event -> {
+            StringBuilder sb=new StringBuilder();
+            carTable.getItems().forEach(carBind -> {
+                if (carBind.getSelect()){
+                    sb.append(carBind.getId()).append(",");
+                }
+            });
+            if(sb.length()>0){
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除已选车辆吗");
+                alert.showAndWait().ifPresent(buttonType -> {
+                    if (buttonType.equals(ButtonType.OK)){
+                        CarController carController=new CarController();
+                        carController.deleteCars(sb.substring(0,sb.length()-1));
+                        carController.queryCars(carQueryName.getText());
+                        carTable.setItems(carController.getCarObservableList());
+                    }
+                });
+            }else{
+                Alert alert=new Alert(Alert.AlertType.WARNING,"请选择要删除的车辆");
+                alert.show();
+            }
         });
         ccdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         ccdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
@@ -429,7 +485,7 @@ public class Controller {
                 if(c.getSelect()){
                     Double price=Double.valueOf(c.getPrice());
                     totalPrice+=price;
-                    CarDetails cd=new CarDetails(0L,c.getProvider(),c.getDepartName(),price);
+                    CarDetails cd=new CarDetails(0L,c.getProvider(),c.getDepartName(),price,0);
                     details.add(cd);
                 }
             }

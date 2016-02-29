@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
  * Created by JIANGRAN on 2016/2/16.
  */
 public class NotifyController {
-    private long dayOfSec=24*3600*1000;
     private ObservableList<CustomerBind> customerObservableList= FXCollections.observableArrayList();
     public ObservableList<CustomerBind> getCustomerObservableList() {
         return customerObservableList;
@@ -25,7 +24,8 @@ public class NotifyController {
 
     public void queryNotifyCustomer(NotifyType type){
         NotifyService notifyService=new NotifyService();
-        long begin=LocalDate.now().toEpochDay()*dayOfSec;
+        long dayOfSec = 24 * 3600 * 1000;
+        long begin=LocalDate.now().toEpochDay()* dayOfSec;
         long end = LocalDate.now().toEpochDay() * dayOfSec + 30 * dayOfSec;
         List<Customer> notifyCustomerList = notifyService.findNotifyCustomerList(type, begin, end);
         customerObservableList.clear();

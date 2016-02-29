@@ -20,11 +20,12 @@ public class CarDetails {
     private String provider;
 
     public CarDetails(){}
-    public CarDetails(long carId,String provider, String departName, double price) {
+    public CarDetails(long carId,String provider, String departName, double price,long id) {
         this.provider = provider;
         this.departName = departName;
         this.price = price;
         this.carId=carId;
+        this.id=id;
     }
 
     public String getProvider() {

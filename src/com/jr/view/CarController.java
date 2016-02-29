@@ -67,4 +67,10 @@ public class CarController {
             box.getItems().add(c.getName());
         }
     }
+    public void deleteCarDetails(String id){
+        carMsgService.deleteDetailsById(id);
+    }
+    public void deleteCars(String id){
+        carMsgService.deleteCarsById(id);
+    }
 }
