@@ -87,8 +87,6 @@ public class Controller {
 
     /*************车辆信息**************/
     @FXML
-    private ComboBox carName;
-    @FXML
     private TextField carDepart;
     @FXML
     private TextField carPrice;
@@ -340,20 +338,6 @@ public class Controller {
      * 初始化车辆信息模块
      */
     private void initializeCarModule(){
-        carName.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER)){
-                CarController carController=new CarController();
-                carController.queryDetailByCarName(carName.getValue().toString().trim());
-                carDetailsTable.setItems(carController.getCarDetailsObservableList());
-            }
-        });
-        carName.getSelectionModel().selectedItemProperty().addListener(((observable1, oldValue1, newValue1) -> {
-            if(newValue1!=null){
-                CarController carController=new CarController();
-                carController.queryDetailByCarName(carName.getValue().toString().trim());
-                carDetailsTable.setItems(carController.getCarDetailsObservableList());
-            }
-        }));
         cdtSelect.setCellFactory(param->{return new CheckBoxTableCell<CarDetailsBind,Boolean>();});
         cdtSelect.setCellValueFactory(c->c.getValue().selectProperty());
         cdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
@@ -378,7 +362,6 @@ public class Controller {
                     if (buttonType.equals(ButtonType.OK)){
                         CarController carController=new CarController();
                         carController.deleteCarDetails(sb.substring(0,sb.length()-1));
-                        carController.queryDetailByCarName(carName.getValue().toString().trim());
                         carDetailsTable.setItems(carController.getCarDetailsObservableList());
                     }
                 });

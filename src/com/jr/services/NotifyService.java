@@ -34,7 +34,7 @@ public class NotifyService {
             public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
                 Customer customer = new Customer(resultSet.getLong("id"), resultSet.getString("userName")
                         , resultSet.getString("carNo"), resultSet.getString("mobile")
-                        , resultSet.getString("insurance"), resultSet.getLong("insuranceStartDate")
+                        , resultSet.getString("manInsurance"),resultSet.getString("busInsurance"), resultSet.getLong("insuranceStartDate")
                         , resultSet.getLong("insuranceEndDate"), resultSet.getString("carName")
                         , resultSet.getString("driveNo"), resultSet.getLong("checkDate"));
                 return customer;

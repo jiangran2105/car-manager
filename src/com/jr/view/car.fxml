@@ -28,7 +28,8 @@
                                     <TableColumn fx:id="cniCarNo" prefWidth="75.0" text="车牌" />
                                     <TableColumn fx:id="cniCarName" prefWidth="75.0" text="车型" />
                                     <TableColumn fx:id="cniMoblie" prefWidth="75.0" text="手机号" />
-                                    <TableColumn fx:id="cniInsurance" prefWidth="75.0" text="保险名" />
+                                    <TableColumn fx:id="cniManInsurance" prefWidth="75.0" text="交强险" />
+                                    <TableColumn fx:id="cniBusInsurance" prefWidth="75.0" text="商业险" />
                                     <TableColumn fx:id="cniInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
                                     <TableColumn fx:id="cniInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
                                     <TableColumn fx:id="cniDriveNo" prefWidth="75.0" text="车架号" />
@@ -49,7 +50,8 @@
                                     <TableColumn fx:id="cncCarNo" prefWidth="75.0" text="车牌" />
                                     <TableColumn fx:id="cncCarName" prefWidth="75.0" text="车型" />
                                     <TableColumn fx:id="cncMoblie" prefWidth="75.0" text="手机号" />
-                                    <TableColumn fx:id="cncInsurance" prefWidth="75.0" text="保险名" />
+                                    <TableColumn fx:id="cncManInsurance" prefWidth="75.0" text="交强险" />
+                                    <TableColumn fx:id="cncBusInsurance" prefWidth="75.0" text="商业险" />
                                     <TableColumn fx:id="cncInsuranceStartDate" prefWidth="75.0" text="保险开始时间" />
                                     <TableColumn fx:id="cncInsuranceEndDate" prefWidth="75.0" text="保险到期时间" />
                                     <TableColumn fx:id="cncDriveNo" prefWidth="75.0" text="车架号" />
@@ -74,14 +76,14 @@
                                             <items>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="77.0" prefWidth="798.0">
                                                    <children>
-                                                      <Label layoutX="30.0" layoutY="43.0" text="配件名" />
-                                                      <TextField fx:id="carDepart" layoutX="85.0" layoutY="39.0" prefHeight="23.0" prefWidth="164.0" />
-                                                      <Label layoutX="280.0" layoutY="43.0" text="价格" />
-                                                      <TextField fx:id="carPrice" layoutX="330.0" layoutY="39.0" />
-                                                      <Label layoutX="280.0" layoutY="14.0" text="供应商" />
-                                                      <TextField fx:id="carProvider" layoutX="330.0" layoutY="10.0" />
-                                                       <Button fx:id="carAdd" layoutX="490.0" layoutY="39.0" mnemonicParsing="false" text="添加" />
-                                                       <Button fx:id="detailDelete" layoutX="490.0" layoutY="10.0" mnemonicParsing="false" text="删除" />
+                                                      <Label layoutX="30.0" layoutY="14.0" text="配件名" />
+                                                      <TextField fx:id="carDepart" layoutX="85.0" layoutY="10.0" prefHeight="23.0" prefWidth="164.0" />
+                                                      <Label layoutX="270.0" layoutY="14.0" text="价格" />
+                                                      <TextField fx:id="carPrice" layoutX="320.0" layoutY="10.0" />
+                                                      <Label layoutX="30.0" layoutY="51.0" text="供应商" />
+                                                      <TextField fx:id="carProvider" layoutX="85.0" layoutY="47.0" prefHeight="28.0" prefWidth="164.0" />
+                                                       <Button fx:id="carAdd" layoutX="492.0" layoutY="9.0" mnemonicParsing="false" text="添加" />
+                                                       <Button fx:id="detailDelete" layoutX="492.0" layoutY="46.0" mnemonicParsing="false" text="删除" />
                                                    </children>
                                                 </AnchorPane>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -92,7 +94,7 @@
                                                           <TableColumn fx:id="cdtDepartName" prefWidth="75.0" text="配件名" />
                                                           <TableColumn fx:id="cdtPrice" prefWidth="75.0" text="价格" />
                                                             <TableColumn fx:id="cdtProvider" prefWidth="75.0" text="供应商" />
-                                                            <TableColumn visible="false" fx:id="cdtId" prefWidth="75.0" text="id" />
+                                                            <TableColumn fx:id="cdtId" prefWidth="75.0" text="id" visible="false" />
                                                         </columns>
                                                       </TableView>
                                                    </children>
@@ -105,45 +107,22 @@
                             </Tab>
                             <Tab text="查询">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <SplitPane dividerPositions="0.2832080200501253" layoutX="84.0" layoutY="89.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <items>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                                   <children>
-                                                      <HBox layoutX="24.0" layoutY="22.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                         <children>
-                                                            <Label layoutX="24.0" layoutY="26.0" text="车型" />
-                                                            <TextField fx:id="carQueryName" layoutX="70.0" layoutY="22.0" />
-                                                            <Button fx:id="carQuery" layoutX="235.0" layoutY="22.0" mnemonicParsing="false" text="查询" />
-                                                             <Button fx:id="carDelete" layoutX="235.0" layoutY="22.0" mnemonicParsing="false" text="删除" />
-                                                         </children>
-                                                      </HBox>
-                                                      <TableView fx:id="carTable" layoutX="52.0" layoutY="58.0" prefHeight="200.0" prefWidth="223.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                                                        <columns>
-                                                            <TableColumn fx:id="cSelect" prefWidth="75.0" text="多选框" />
-                                                          <TableColumn fx:id="cName" prefWidth="199.0" text="车型" />
-                                                            <TableColumn visible="false"  fx:id="cId" prefWidth="199.0" text="id" />
-                                                        </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </AnchorPane>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                                   <children>
-                                                      <Label layoutX="22.0" layoutY="14.0" text="车型对应配件信息列表" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
-                                                      <TableView fx:id="ccDetailsTable" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                                                        <columns>
-                                                          <TableColumn fx:id="ccdtDepartName" prefWidth="323.0" text="配件名" />
-                                                            <TableColumn fx:id="ccdtProvider" prefWidth="105.0" text="供应商" />
-                                                          <TableColumn fx:id="ccdtPrice" prefWidth="105.0" text="价格" />
-                                                        </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </AnchorPane>
-                                            </items>
-                                          </SplitPane>
-                                       </children>
-                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                      <children>
+                                          <Label layoutX="22.0" layoutY="14.0" text="车型对应配件信息列表" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                                          <TableView fx:id="ccDetailsTable" layoutY="58.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                                              <columns>
+                                                  <TableColumn fx:id="ccdtDepartName" prefWidth="323.0" text="配件名" />
+                                                  <TableColumn fx:id="ccdtProvider" prefWidth="105.0" text="供应商" />
+                                                  <TableColumn fx:id="ccdtPrice" prefWidth="105.0" text="价格" />
+                                              </columns>
+                                          </TableView>
+                                          <TextField fx:id="carQueryName" layoutX="63.0" layoutY="26.0" />
+                                          <Label layoutX="14.0" layoutY="31.0" text="配件名" />
+                                          <Button fx:id="carQuery" layoutX="225.0" layoutY="26.0" mnemonicParsing="false" text="查询" />
+                                          <Button fx:id="carDelete" layoutX="299.0" layoutY="26.0" mnemonicParsing="false" text="删除" />
+                                      </children>
+                                  </AnchorPane>
                               </content>
                             </Tab>
                           </tabs>
@@ -175,6 +154,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints />
                                                     <RowConstraints />
+                                          <RowConstraints />
                                                 </rowConstraints>
                                                 <children>
                                                     <Label text="姓名(必填)" />
@@ -199,12 +179,9 @@
                                                     <TextField fx:id="ctCar" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                                 </children>
                                             </GridPane>
-                                            <HBox layoutX="88.0" layoutY="235.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="280.0">
-                                                <children>
-                                                    <Button fx:id="ctAdd" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="确定" />
-                                                    <Button fx:id="ctClear" layoutX="88.0" layoutY="235.0" mnemonicParsing="false" text="清空" />
-                                                </children>
-                                            </HBox>
+                                            <HBox layoutX="88.0" layoutY="235.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="280.0" />
+                                              <Button fx:id="ctAdd" layoutX="2.0" layoutY="324.0" mnemonicParsing="false" text="确定" />
+                                              <Button fx:id="ctClear" layoutX="62.0" layoutY="324.0" mnemonicParsing="false" text="清空" />
                                         </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -275,7 +252,7 @@
                                                             <Label text="车牌号" GridPane.rowIndex="1" />
                                                             <Label text="车型" GridPane.rowIndex="2" />
                                                             <Label text="总价" visible="false" GridPane.rowIndex="3" />
-                                                            <ComboBox fx:id="rName"  GridPane.columnIndex="1" />
+                                                            <ComboBox fx:id="rName" GridPane.columnIndex="1" />
                                                             <ComboBox fx:id="rCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <TextField visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                             <ComboBox fx:id="rCarName" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
