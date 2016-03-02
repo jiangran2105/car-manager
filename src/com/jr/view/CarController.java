@@ -25,17 +25,18 @@ public class CarController {
 
     public void addDetails(String departName,String price,String provider){
         carMsgService.insertCarDetails(departName, price, provider);
+        this.fillCarDetailsObservableList();
     }
-    public void fillCarDetailsObservableList(long carId){
-        List<CarDetails> details= carMsgService.findDetailsById(carId);
+    public void fillCarDetailsObservableList(){
+        List<CarDetails> details= carMsgService.findDetailsAll();
         for (CarDetails d:details) {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
                     new SimpleStringProperty(d.getProvider()),new SimpleStringProperty(String.valueOf(d.getId())));
             carDetailsObservableList.add(cdb);
         }
     }
-    public void queryDetailByCarName(String carName){
-        List<CarDetails> details = carMsgService.findDetailsByName(carName);
+    public void queryDetailByName(String Name){
+        List<CarDetails> details = carMsgService.findDetailsByName(Name);
         for (CarDetails d:details) {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
                     new SimpleStringProperty(d.getProvider()),new SimpleStringProperty(String.valueOf(d.getId())));
@@ -44,8 +45,7 @@ public class CarController {
     }
     public void deleteCarDetails(String id){
         carMsgService.deleteDetailsById(id);
+        this.fillCarDetailsObservableList();
     }
-    public void deleteCars(String id){
-        carMsgService.deleteCarsById(id);
-    }
+
 }

@@ -373,14 +373,10 @@ public class Controller {
 
         carQuery.setOnAction(event -> {
             CarController carController=new CarController();
+            carController.queryDetailByName(carQueryName.getText().trim());
+            carDetailsTable.setItems(carController.getCarDetailsObservableList());
         });
-        carDelete.setOnAction(event -> {
-            StringBuilder sb=new StringBuilder();
-        });
-        ccdtDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
-        ccdtPrice.setCellValueFactory(c->c.getValue().priceProperty());
-        ccdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
-
+        
 
     }
 
