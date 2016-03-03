@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
@@ -387,6 +388,8 @@ public class Controller {
         RepairController repairController=new RepairController();
         rcDepartName.setCellValueFactory(c->c.getValue().departNameProperty());
         rcProvider.setCellValueFactory(c->c.getValue().providerProperty());
+        rcProvider.setCellFactory(TextFieldTableCell.forTableColumn());
+        rcPrice.setCellFactory(TextFieldTableCell.forTableColumn());
         rcPrice.setCellValueFactory(c->c.getValue().priceProperty());
         rcSelect.setCellValueFactory(c->c.getValue().selectProperty());
 
@@ -400,14 +403,13 @@ public class Controller {
         rdcProvider.setCellValueFactory(c->c.getValue().providerProperty());
         rdcPrice.setCellValueFactory(c->c.getValue().priceProperty());
 
+
         rName.getSelectionModel().selectedItemProperty().addListener(((observable2, oldValue2, newValue2) -> {
             if(newValue2!=null){
                 Customer customer = repairController.initializeCarNoComobox(rCarNo, newValue2.toString().trim());
                 if(customer!=null){
                     rCarNo.setValue(customer.getCarNo());
                     rCarName.setValue(customer.getCarName());
-                    repairController.findCarDetailsByCarName(customer.getCarName());
-                    rDetailsTable.setItems(repairController.getCarDetailsObservableList());
                 }
             }
         }));
@@ -415,19 +417,17 @@ public class Controller {
             if(newValue2!=null&&!newValue2.equals("")){
                 Customer customer = repairController.findCustomerByCarNo(newValue2.toString().trim());
                 rCarName.setValue(customer.getCarName());
-                repairController.findCarDetailsByCarName(customer.getCarName());
-                rDetailsTable.setItems(repairController.getCarDetailsObservableList());
             }
         }));
         rcSelect.setCellFactory(param -> {
             return new CheckBoxTableCell<CarDetailsBind, Boolean>();
         });
-        rCarName.getSelectionModel().selectedItemProperty().addListener(((observable1, oldValue1, newValue1) -> {
+        /*rCarName.getSelectionModel().selectedItemProperty().addListener(((observable1, oldValue1, newValue1) -> {
             if(newValue1!=null&&!newValue1.toString().equals("")){
                 repairController.findCarDetailsByCarName(newValue1.toString());
                 rDetailsTable.setItems(repairController.getCarDetailsObservableList());
             }
-        }));
+        }));*/
         radd.setOnAction(event -> {
             List<CarDetails> details=new ArrayList<CarDetails>();
             Double totalPrice=0.0;
@@ -527,6 +527,8 @@ public class Controller {
         repairController.initializeCustomerComobox(rName);
         rCarName.setValue("");
         rDetailsTable.getItems().clear();
+        repairController.findCarDetailsByCarName();
+        rDetailsTable.setItems(repairController.getCarDetailsObservableList());
     }
 }
 

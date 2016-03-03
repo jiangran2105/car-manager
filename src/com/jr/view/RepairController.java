@@ -45,10 +45,10 @@ public class RepairController {
         repairService.addRepair(customerName, carNo, carName, price, details);
     }
 
-    public void findCarDetailsByCarName(String name){
+    public void findCarDetailsByCarName(){
         carDetailsObservableList.clear();
         CarMsgService cms=new CarMsgService();
-        List<CarDetails> carDetails= cms.findDetailsByName(name);
+        List<CarDetails> carDetails= cms.findDetailsAll();
         for (CarDetails d:carDetails) {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
                     new SimpleStringProperty(d.getProvider()),new SimpleStringProperty("1"));
