@@ -1,6 +1,7 @@
 package com.jr.view;
 import com.jr.model.*;
 import com.jr.services.NotifyType;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -118,14 +119,6 @@ public class Controller {
     @FXML
     private TextField carQueryName;
 
-    @FXML
-    private TableView<CarDetailsBind> ccDetailsTable;
-    @FXML
-    private TableColumn<CarDetailsBind, String> ccdtDepartName;
-    @FXML
-    private TableColumn<CarDetailsBind, String> ccdtPrice;
-    @FXML
-    private TableColumn<CarDetailsBind, String> ccdtProvider;
 
     /*************维修信息**************/
     @FXML
@@ -133,7 +126,9 @@ public class Controller {
     @FXML
     private ComboBox rCarNo;
     @FXML
-    private ComboBox rCarName;
+    private TextField rCarName;
+    @FXML
+    private TextArea rRemark;
     @FXML
     private TextField rTotalPrice;
 
@@ -152,11 +147,15 @@ public class Controller {
     @FXML
     private Button rQuery;
     @FXML
+    private Button rDelete;
+    @FXML
     private TextField rqCusName;
     @FXML
     private TextField rqCarNo;
     @FXML
     private TableView<RepairHistoryBind> rRepairTable;
+    @FXML
+    private TableColumn<RepairHistoryBind, Boolean> rbcSelect;
     @FXML
     private TableColumn<RepairHistoryBind, String> rcCustomer;
     @FXML
@@ -167,6 +166,10 @@ public class Controller {
     private TableColumn<RepairHistoryBind, String> rcCreatetime;
     @FXML
     private TableColumn<RepairHistoryBind, String> rcTotalPrice;
+    @FXML
+    private TableColumn<RepairHistoryBind, String> rcRemark;
+    @FXML
+    private TableColumn<RepairHistoryBind, String> rbcId;
 
     @FXML
     private TableView<RepairHistoryDetailBind> rRepairDetailsTable;
@@ -346,9 +349,11 @@ public class Controller {
         cdtProvider.setCellValueFactory(c->c.getValue().providerProperty());
         cdtId.setCellValueFactory(c->c.getValue().idProperty());
         carAdd.setOnAction(event -> {
-            CarController carController=new CarController();
-            carController.addDetails(carDepart.getText(),carPrice.getText().trim(),carProvider.getText());
-            carDetailsTable.setItems(carController.getCarDetailsObservableList());
+            if(!carDepart.getText().trim().equals("")){
+                CarController carController=new CarController();
+                carController.addDetails(carDepart.getText(),carPrice.getText().trim().equals("")?"0":carPrice.getText().trim(),carProvider.getText());
+                carDetailsTable.setItems(carController.getCarDetailsObservableList());
+            }
         });
         detailDelete.setOnAction(event1 -> {
             StringBuilder sb=new StringBuilder();
@@ -392,9 +397,13 @@ public class Controller {
         rcPrice.setCellFactory(TextFieldTableCell.forTableColumn());
         rcPrice.setCellValueFactory(c->c.getValue().priceProperty());
         rcSelect.setCellValueFactory(c->c.getValue().selectProperty());
+        rbcSelect.setCellFactory(param->{return new CheckBoxTableCell<RepairHistoryBind,Boolean>();});
+        rbcSelect.setCellValueFactory(c->c.getValue().selectProperty());
 
         rcCustomer.setCellValueFactory(c->c.getValue().customerProperty());
         rcTotalPrice.setCellValueFactory(c->c.getValue().priceProperty());
+        rcRemark.setCellValueFactory(c->c.getValue().remarkProperty());
+        rbcId.setCellValueFactory(c->c.getValue().idProperty());
         rcCarNo.setCellValueFactory(c->c.getValue().carNoProperty());
         rcCarName.setCellValueFactory(c->c.getValue().carNameProperty());
         rcCreatetime.setCellValueFactory(c->c.getValue().createTimeProperty());
@@ -409,14 +418,14 @@ public class Controller {
                 Customer customer = repairController.initializeCarNoComobox(rCarNo, newValue2.toString().trim());
                 if(customer!=null){
                     rCarNo.setValue(customer.getCarNo());
-                    rCarName.setValue(customer.getCarName());
+                    rCarName.setText(customer.getCarName());
                 }
             }
         }));
         rCarNo.getSelectionModel().selectedItemProperty().addListener(((observable2, oldValue2, newValue2) -> {
             if(newValue2!=null&&!newValue2.equals("")){
                 Customer customer = repairController.findCustomerByCarNo(newValue2.toString().trim());
-                rCarName.setValue(customer.getCarName());
+                rCarName.setText(customer.getCarName());
             }
         }));
         rcSelect.setCellFactory(param -> {
@@ -440,7 +449,7 @@ public class Controller {
                     details.add(cd);
                 }
             }
-            repairController.addRepair(rName.getValue().toString().trim(),rCarNo.getValue().toString().trim(),rCarName.getValue().toString(),totalPrice,details);
+            repairController.addRepair(rName.getValue().toString().trim(),rCarNo.getValue().toString().trim(),rCarName.getText().trim(),totalPrice,rRemark.getText().trim(),details);
             Alert alert=new Alert(Alert.AlertType.INFORMATION,"添加成功");
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
@@ -451,6 +460,26 @@ public class Controller {
         rQuery.setOnAction(event -> {
             repairController.findRepairs(rqCusName.getText().trim(),rqCarNo.getText().trim());
             rRepairTable.setItems(repairController.getRepairObservableList());
+        });
+        rDelete.setOnAction(event -> {
+            StringBuilder sb=new StringBuilder();
+            rRepairTable.getItems().forEach(repairHistoryBind -> {
+                if(repairHistoryBind.getSelect()){
+                    sb.append(repairHistoryBind.getId()).append(",");
+                }
+            });
+            if(sb.length()>0){
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除已选配件吗");
+                alert.showAndWait().ifPresent(buttonType -> {
+                    if (buttonType.equals(ButtonType.OK)){
+                        repairController.deleteHis(rqCusName.getText().trim(),rqCarNo.getText().trim(),sb.substring(0,sb.length()-1));
+                        rRepairTable.setItems(repairController.getRepairObservableList());
+                    }
+                });
+            }else{
+                Alert alert=new Alert(Alert.AlertType.WARNING,"请选择要删除的配件");
+                alert.show();
+            }
         });
         rRepairTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if(newValue!=null){
@@ -516,7 +545,6 @@ public class Controller {
         carProvider.clear();
         carQueryName.clear();
         carDetailsTable.getItems().clear();
-        ccDetailsTable.getItems().clear();
 
     }
     private void clearRepairField(){
@@ -525,7 +553,8 @@ public class Controller {
         rCarNo.getItems().clear();
         rCarNo.setValue("");
         repairController.initializeCustomerComobox(rName);
-        rCarName.setValue("");
+        rCarName.clear();
+        rRemark.clear();
         rDetailsTable.getItems().clear();
         repairController.findCarDetailsByCarName();
         rDetailsTable.setItems(repairController.getCarDetailsObservableList());

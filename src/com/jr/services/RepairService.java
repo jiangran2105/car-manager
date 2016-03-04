@@ -15,14 +15,14 @@ import java.util.List;
  * Created by jiangran on 16-2-5.
  */
 public class RepairService {
-    public void addRepair(String customerName, String carNo, String carName, double price, List<CarDetails> details){
+    public void addRepair(String customerName, String carNo, String carName, double price,String remark, List<CarDetails> details){
         BaseDao baseDao=new BaseDao();
         String sql1="select max(id) from reparation";
         Integer repairId=baseDao.executeQueryOne(sql1,new MapSqlParameterSource(),Integer.TYPE);
         repairId=repairId!=null?repairId+1:1;
 
-        String sql2="insert into reparation (id,customerName,carNo,carName,createDate,price) " +
-                "values(:id,:customerName,:carNo,:carName,:createDate,:price)";
+        String sql2="insert into reparation (id,customerName,carNo,carName,createDate,price,remark) " +
+                "values(:id,:customerName,:carNo,:carName,:createDate,:price,:remark)";
         MapSqlParameterSource reparationParam=new MapSqlParameterSource();
         reparationParam.addValue("id",repairId);
         reparationParam.addValue("customerName",customerName);
@@ -30,6 +30,7 @@ public class RepairService {
         reparationParam.addValue("carName",carName);
         reparationParam.addValue("createDate", System.currentTimeMillis());
         reparationParam.addValue("price",price);
+        reparationParam.addValue("remark",remark);
         baseDao.executeUpdate(sql2,reparationParam);
 
         for (CarDetails cd:details
@@ -60,7 +61,7 @@ public class RepairService {
                 return new RepairHistory(resultSet.getLong("id"),
                         resultSet.getString("customerName"), resultSet.getString("carNo"),
                         resultSet.getString("carName"), resultSet.getLong("createDate"),
-                        resultSet.getDouble("price"), "");
+                        resultSet.getDouble("price"), resultSet.getString("remark"));
             }
         });
         return repairHistories;
@@ -79,6 +80,12 @@ public class RepairService {
             }
         });
         return repairHisDetails;
+    }
+    public void deleteHis(String hisId){
+        String sql="delete from reparation where id in("+hisId+");delete from reparation_details where reparId in("+hisId+")";
+        MapSqlParameterSource param=new MapSqlParameterSource();
+        BaseDao baseDao=new BaseDao();
+        baseDao.executeUpdate(sql,param);
     }
     public void clearHis(){
         String sql="delete from reparation;delete from reparation_details;";

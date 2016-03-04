@@ -238,8 +238,8 @@
                                                             <Label text="备注" GridPane.rowIndex="3" />
                                                             <ComboBox fx:id="rName" GridPane.columnIndex="1" />
                                                             <ComboBox fx:id="rCarNo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <TextArea prefHeight="49.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                            <ComboBox fx:id="rCarName" prefHeight="41.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextArea fx:id="rRemark" prefHeight="49.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                            <TextField fx:id="rCarName" prefHeight="41.0" prefWidth="134.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                          </children>
                                                       </GridPane>
                                                       <Button fx:id="radd" layoutY="174.0" mnemonicParsing="false" text="添加" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="174.0" />
@@ -279,16 +279,19 @@
                                                             <Label layoutX="242.0" layoutY="23.0" text="车牌号" />
                                                             <TextField fx:id="rqCarNo" layoutX="282.0" layoutY="19.0" />
                                                             <Button fx:id="rQuery" layoutX="445.0" layoutY="19.0" mnemonicParsing="false" text="查询" />
+                                                             <Button fx:id="rDelete" layoutX="465.0" layoutY="19.0" mnemonicParsing="false" text="删除选中记录" />
                                                          </children>
                                                       </HBox>
                                                       <TableView fx:id="rRepairTable" layoutX="40.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
                                                         <columns>
+                                                            <TableColumn fx:id="rbcSelect" prefWidth="75.0" text="多选框" />
                                                           <TableColumn fx:id="rcCustomer" prefWidth="75.0" text="车主名" />
                                                           <TableColumn fx:id="rcCarNo" prefWidth="75.0" text="车牌号" />
                                                             <TableColumn fx:id="rcCarName" prefWidth="75.0" text="车型" />
                                                             <TableColumn fx:id="rcCreatetime" prefWidth="75.0" text="添加日期" />
                                                             <TableColumn fx:id="rcTotalPrice" prefWidth="75.0" text="总价" />
-                                                            <TableColumn prefWidth="75.0" text="备注" />
+                                                            <TableColumn fx:id="rcRemark" prefWidth="75.0" text="备注" />
+                                                            <TableColumn fx:id="rbcId"/>
                                                         </columns>
                                                       </TableView>
                                                    </children>

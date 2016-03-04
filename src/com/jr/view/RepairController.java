@@ -40,9 +40,9 @@ public class RepairController {
         Customer customer=cs.queryCustomerByName(name);
         return customer;
     }*/
-    public void addRepair(String customerName, String carNo, String carName, double price, List<CarDetails> details){
+    public void addRepair(String customerName, String carNo, String carName, double price,String remark, List<CarDetails> details){
         RepairService repairService=new RepairService();
-        repairService.addRepair(customerName, carNo, carName, price, details);
+        repairService.addRepair(customerName, carNo, carName, price, remark,details);
     }
 
     public void findCarDetailsByCarName(){
@@ -51,7 +51,7 @@ public class RepairController {
         List<CarDetails> carDetails= cms.findDetailsAll();
         for (CarDetails d:carDetails) {
             CarDetailsBind cdb=new CarDetailsBind(new SimpleStringProperty(d.getName()),new SimpleStringProperty(String.valueOf(d.getPrice())),
-                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty("1"));
+                    new SimpleStringProperty(d.getProvider()),new SimpleStringProperty(String.valueOf(d.getId())));
             carDetailsObservableList.add(cdb);
         }
     }
@@ -84,6 +84,13 @@ public class RepairController {
                     new SimpleStringProperty(String.valueOf(d.getPrice())));
             repairDetailObservableList.add(db);
         }
+    }
+    public void deleteHis(String name,String carNo,String repairId){
+        repairObservableList.clear();
+        repairDetailObservableList.clear();
+        RepairService repairService=new RepairService();
+        repairService.deleteHis(repairId);
+        findRepairs(name, carNo);
     }
     public void clearRepairHis(){
         RepairService repairService=new RepairService();

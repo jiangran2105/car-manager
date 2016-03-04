@@ -1,11 +1,14 @@
 package com.jr.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  * Created by jiangran on 16-2-14.
  */
 public class RepairHistoryBind {
+
     private StringProperty id;
     private StringProperty customer;
     private StringProperty carNo;
@@ -13,6 +16,7 @@ public class RepairHistoryBind {
     private StringProperty createTime;
     private StringProperty price;
     private StringProperty remark;
+    private BooleanProperty select;
 
     public RepairHistoryBind(StringProperty id, StringProperty customer, StringProperty carNo, StringProperty carName, StringProperty createTime, StringProperty price, StringProperty remark) {
         this.id = id;
@@ -22,6 +26,7 @@ public class RepairHistoryBind {
         this.createTime = createTime;
         this.price = price;
         this.remark = remark;
+        this.select=new SimpleBooleanProperty(false);
     }
 
     public String getId() {
@@ -106,5 +111,17 @@ public class RepairHistoryBind {
 
     public void setRemark(String remark) {
         this.remark.set(remark);
+    }
+
+    public boolean getSelect() {
+        return select.get();
+    }
+
+    public BooleanProperty selectProperty() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select.set(select);
     }
 }
