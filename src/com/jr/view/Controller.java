@@ -243,7 +243,7 @@ public class Controller {
             String tabId=newValue.getId();
             switch (tabId){
                 case "customer":
-                    clearCustomerField();
+                    clearCustomerField(true);
                     break;
                 case "car":
                     clearCarField();
@@ -292,9 +292,11 @@ public class Controller {
                     ctManInsurance.getText().trim(),ctBusInsurance.getText().trim(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
                     ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getText().trim(),ctDriveNo.getText().trim(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
             ctTable.setItems(customerController.getCustomerObservableList());
+            this.clearCustomerField(false );
         });
         ctClear.setOnAction(event1 -> {
-            this.clearCustomerField();
+            customerController.isEdit=0L;
+            this.clearCustomerField(false);
         });
         ctquery.setOnAction(event -> {
             customerController.queryCustomer(ctqName.getText(),ctqCarNo.getText());
@@ -431,12 +433,6 @@ public class Controller {
         rcSelect.setCellFactory(param -> {
             return new CheckBoxTableCell<CarDetailsBind, Boolean>();
         });
-        /*rCarName.getSelectionModel().selectedItemProperty().addListener(((observable1, oldValue1, newValue1) -> {
-            if(newValue1!=null&&!newValue1.toString().equals("")){
-                repairController.findCarDetailsByCarName(newValue1.toString());
-                rDetailsTable.setItems(repairController.getCarDetailsObservableList());
-            }
-        }));*/
         radd.setOnAction(event -> {
             List<CarDetails> details=new ArrayList<CarDetails>();
             Double totalPrice=0.0;
@@ -521,9 +517,7 @@ public class Controller {
         cncCheckDate.setCellValueFactory(c->c.getValue().checkDateProperty());
     }
 
-    private void clearCustomerField(){
-        CustomerController customerController=new CustomerController();
-        customerController.isEdit=0;
+    private void clearCustomerField(boolean isClearTable){
         ctName.clear();
         ctCarNo.clear();
         ctMobile.clear();
@@ -536,7 +530,8 @@ public class Controller {
         ctCar.clear();
         ctqCarNo.clear();
         ctqName.clear();
-        ctTable.getItems().clear();
+        if(isClearTable)
+            ctTable.getItems().clear();
     }
     private void clearCarField(){
         CarController carController=new CarController();
