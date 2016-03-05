@@ -291,6 +291,9 @@ public class Controller {
             customerController.addCustomer(ctName.getText().trim(),ctCarNo.getText().trim(),ctMobile.getText().trim(),
                     ctManInsurance.getText().trim(),ctBusInsurance.getText().trim(),ctInsuranceStartDate.getValue().toEpochDay()*24*3600*1000,
                     ctInsuranceEndDate.getValue().toEpochDay()*24*3600*1000,ctCar.getText().trim(),ctDriveNo.getText().trim(),ctCheckDate.getValue().toEpochDay()*24*3600*1000);
+            Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"添加成功");
+            alert.show();
+            this.clearCustomerField();
             ctTable.setItems(customerController.getCustomerObservableList());
         });
         ctClear.setOnAction(event1 -> {
@@ -469,7 +472,7 @@ public class Controller {
                 }
             });
             if(sb.length()>0){
-                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除已选配件吗");
+                Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"确定删除已选记录吗");
                 alert.showAndWait().ifPresent(buttonType -> {
                     if (buttonType.equals(ButtonType.OK)){
                         repairController.deleteHis(rqCusName.getText().trim(),rqCarNo.getText().trim(),sb.substring(0,sb.length()-1));
@@ -477,7 +480,7 @@ public class Controller {
                     }
                 });
             }else{
-                Alert alert=new Alert(Alert.AlertType.WARNING,"请选择要删除的配件");
+                Alert alert=new Alert(Alert.AlertType.WARNING,"请选择要删除的记录");
                 alert.show();
             }
         });
@@ -523,7 +526,7 @@ public class Controller {
 
     private void clearCustomerField(){
         CustomerController customerController=new CustomerController();
-        customerController.isEdit=0;
+        customerController.isEdit=0L;
         ctName.clear();
         ctCarNo.clear();
         ctMobile.clear();
