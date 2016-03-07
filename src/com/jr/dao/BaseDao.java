@@ -31,7 +31,7 @@ public class BaseDao {
     public  void execute(List<String> batchSql){
         try {
             for (String sql:batchSql) {
-                jdbcTemplate.execute(sql,null);
+                jdbcTemplate.update(sql,new MapSqlParameterSource());
             }
         } catch (DataAccessException e) {
             log.error(new CommonUtil().getTrace(e));

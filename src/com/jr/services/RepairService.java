@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,14 +83,17 @@ public class RepairService {
         return repairHisDetails;
     }
     public void deleteHis(String hisId){
-        String sql="delete from reparation where id in("+hisId+");delete from reparation_details where reparId in("+hisId+")";
-        MapSqlParameterSource param=new MapSqlParameterSource();
+        List<String> sqls=new ArrayList<>();
+        sqls.add("delete from reparation where id in("+hisId+")");
+        sqls.add("delete from reparation_details where reparId in("+hisId+")");
         BaseDao baseDao=new BaseDao();
-        baseDao.executeUpdate(sql,param);
+        baseDao.execute(sqls);
     }
     public void clearHis(){
-        String sql="delete from reparation;delete from reparation_details;";
+        List<String> sql=new ArrayList<>();
+        sql.add("delete from reparation;");
+        sql.add("delete from reparation_details;");
         BaseDao baseDao=new BaseDao();
-        baseDao.executeUpdate(sql,new MapSqlParameterSource());
+        baseDao.execute(sql);
     }
 }

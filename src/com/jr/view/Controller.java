@@ -265,6 +265,8 @@ public class Controller {
             RepairController repairController=new RepairController();
             repairController.clearRepairHis();
             Alert alert=new Alert(Alert.AlertType.INFORMATION,"清空成功");
+            alert.show();
+            this.clearRepairField();
         });
     }
 
@@ -551,6 +553,8 @@ public class Controller {
         rCarName.clear();
         rRemark.clear();
         rDetailsTable.getItems().clear();
+        rRepairTable.getItems().clear();
+        rRepairDetailsTable.getItems().clear();
         repairController.findCarDetailsByCarName();
         rDetailsTable.setItems(repairController.getCarDetailsObservableList());
     }
